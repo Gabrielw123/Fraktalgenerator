@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--bild för hemsida-->
+    <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/ico.png"/>
+    <title>Fraktal genrator</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onresize = "fraktal.fixsize();">
+    <!--knappar/boxen-->
+    <div id="kontroller" class="kontroller">
+
+    <!--#0090,0180,1,2,1,0,5-->
+    
+    <!--VINKEL Slider-->
+    <div class="sliderlinecontainer" onmousedown="fraktal.vinkel.jump(event)">
+        <div class="slider" id="vinkel" onmousedown="fraktal.vinkel.down(event)">
+            <div class="sliderlabeldiv">
+                <p class="sltitle">VINKEL</p>
+                <a id="lvinkel"></a><a>&deg;</a>
+            </div>
+        </div>
+        <div class="sliderline"></div>
+    </div>
+    <!--SKEW Slider-->
+    <div class="sliderlinecontainer" onmousedown="fraktal.skewvinkel.jump(event)">
+        <div class="slider" id="skewvinkel" onmousedown="fraktal.skewvinkel.down(event)">
+            <div class="sliderlabeldiv">
+                <p class="sltitle">SKEW</p>
+                <a id="lskewvinkel"></a><a>&deg;</a>
+            </div>
+        </div>
+        <div class="sliderline"></div>
+    </div>
+
+    <!--Egenskaper knappar bas segment-->
+    <table id="egenskapertable">
+        <tr id="egenskaperarea">
+        </tr>
+    </table>
+
+    <!--Funktions knappar-->
+    <table>
+        <tr>
+            <td>
+                <a class="knapp" id="randombutton" onclick="fraktal.reset();">TA BORT</a>
+            </td>
+            <td>
+                <a class="knapp" id="randombutton" onclick="fraktal.random();">RANDOM</a>
+            </td>
+            <td>
+                <div id="animatecell">
+                <a class="knapp" id="animatebutton" onclick="fraktal.animate.toggle();">ANIMEäA</a>
+                <div class="menu">
+                    <a class="knapp"  id="vinkellock" onmousedown="fraktal.vinkel.locktoggle()" onmouseover="fraktal.vinkel.highlight(1)" onmouseout="fraktal.vinkel.highlight(0)">VINKEL</a>
+                    <a class="knapp"  id="skewvinkellock" onmousedown="fraktal.skewvinkel.locktoggle()" onmouseover="fraktal.skewvinkel.highlight(1)" onmouseout="fraktal.skewvinkel.highlight(0)">SKEW</a>
+                </div>
+                </div>
+            </td>
+           
+            <td>
+                <a class="knapp" id="trailsbutton" onclick="fraktal.trails.toggle();">SPÅR</a>
+            </td>
+        </tr>
+    </table>
+    <!--div kontroller-->
+    </div>
+    <canvas id="main" width="2048" height="2048" style="border:0px solid #000000;" onmousedown="fraktal.drag.down(event)"></canvas>
+    <script>fraktal.init ();</script>
+
+</body>
+</html> 

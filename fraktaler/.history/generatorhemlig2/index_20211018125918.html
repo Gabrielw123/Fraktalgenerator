@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/ico.png"/>
+    <title>Fraktal genrator</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onresize = "fract.fixsize();">
+    <!--knappar/boxen-->
+    <div id="controls" class="controls">
+
+    <!--#0090,0180,1,2,1,0,5-->
+
+    <a>FRAKTAL GENERATOR</a>
+    <!--VINKEL Slider-->
+    <div class="sliderlinecontainer" onmousedown="fract.angle.jump(event)">
+        <div class="slider" id="angle" onmousedown="fract.angle.down(event)">
+            <div class="sliderlabeldiv">
+                <p class="sltitle">VINKEL</p>
+                <a id="langle"></a><a>&deg;</a>
+            </div>
+        </div>
+        <div class="sliderline"></div>
+    </div>
+    <!--SKEW Slider-->
+    <div class="sliderlinecontainer" onmousedown="fract.skewangle.jump(event)">
+        <div class="slider" id="skewangle" onmousedown="fract.skewangle.down(event)">
+            <div class="sliderlabeldiv">
+                <p class="sltitle">SKEW</p>
+                <a id="lskewangle"></a><a>&deg;</a>
+            </div>
+        </div>
+        <div class="sliderline"></div>
+    </div>
+
+    <!--Egenskaper knappar-->
+    <table id="thumbtable">
+        <tr id="thumbarea">
+        </tr>
+    </table>
+    <!--Funktions knappar-->
+    <table>
+        <tr>
+            <td>
+                <a class="button" id="randombutton" onclick="fract.reset();">RESET</a>
+            </td>
+            <td>
+                <a class="button" id="randombutton" onclick="fract.random();">RANDOM</a>
+            </td>
+            <td>
+                <div id="animatecell">
+                <a class="button" id="animatebutton" onclick="fract.animate.toggle();">ANIMATE</a>
+                <div class="menu">
+                    <a class="button"  id="anglelock" onmousedown="fract.angle.locktoggle()" onmouseover="fract.angle.highlight(1)" onmouseout="fract.angle.highlight(0)">ANGLE</a>
+                    <a class="button"  id="skewanglelock" onmousedown="fract.skewangle.locktoggle()" onmouseover="fract.skewangle.highlight(1)" onmouseout="fract.skewangle.highlight(0)">SKEW</a> 
+                </div>
+                </div>
+            </td>
+           
+            <td>
+                <a class="button" id="trailsbutton" onclick="fract.trails.toggle();">TRAILS</a>
+            </td>
+        </tr>
+    </table>
+    <!--div kontroller-->
+    </div>
+    <canvas id="main" width="2048" height="2048" style="border:0px solid #000000;" onmousedown="fract.drag.down(event)"></canvas>
+    <script>fract.init ();</script>
+
+</body>
+</html> 

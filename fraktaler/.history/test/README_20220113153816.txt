@@ -1,0 +1,14 @@
+Den här fraktal generatorn använder sig av Lindenmayer systemet (https://en.wikipedia.org/wiki/L-system)
+Bra att veta: det finns lite buggar.
+TIPS är att trycka på DJUP några gånger så att det funkar rätt
+REGLER\nF = Move forward by line length drawing a line
++ = Turn left by turning angle
+- = Turn right by turning angle
+[ = Push current drawing state onto stack
+] = Pop current drawing state from the stack
+1. Börja med att trycka på RESET 
+2. 
+3. 
+4. 
+5. 
+6.bruh

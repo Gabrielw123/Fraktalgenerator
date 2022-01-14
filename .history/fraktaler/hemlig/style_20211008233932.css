@@ -1,0 +1,31 @@
+body {
+    font-family: 'Ubuntu Mono', monospace;
+    background-color: white;
+    text-align: center;
+  }
+  
+  table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+  }
+  
+  .grid-container {
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: auto;
+    padding-left: 30%;
+    padding-right: 30%;
+  }
+  .grid-item {
+    padding: 0px;
+    text-align: center;
+  }
+
+  img{
+    width: 45%;
+    height: 45%;
+  }

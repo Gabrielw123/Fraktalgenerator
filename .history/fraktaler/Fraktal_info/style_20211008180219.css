@@ -1,0 +1,71 @@
+
+
+body {
+  font-family: 'Ubuntu Mono', monospace;
+  background-color: white;
+  text-align: center;
+}
+
+
+h1 {
+  color: black;
+  text-align: center;
+  font-size: 200%;
+}
+h2{
+  font-size: 200%;
+  margin: 0 auto;
+}
+p {
+  font-size: 105%;
+  margin: 0 auto;
+}
+a{
+  font-size: 105%;
+  color: gray;
+}
+
+.img-with-text {
+  text-align: center;
+  width: [width of img];
+}
+
+.project{
+  margin-top:4px;
+  margin-bottom:4px;
+  display: center;
+  max-width:100%;
+  width:256px;
+  margin-left:25px;
+  margin-right:25px;
+}
+
+.row {
+  display: center;
+}
+
+.column {
+  flex: 2.33%;
+}
+.footer{ 
+  position: fixed;     
+  text-align: left;    
+  bottom: 0px; 
+  width: 100%;
+} 
+
+
+img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.background {
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+video{
+  object-fit: contain;
+}

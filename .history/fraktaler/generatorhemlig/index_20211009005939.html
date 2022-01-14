@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/g%C3%A5s%20bild.jpg"/>
+    <title>FRACTAL MACHINE</title>
+    <meta name="description" content="Fractal Machine">
+    <meta name="author" content="Nico Disseldorp">
+    <meta name="keywords" content="HTML5,JavaScript,Logic,Fractal,Machine">
+    <script src="script.js"></script>
+    <script type="text/javascript">
+/*
+todo&bugs
+
+IMPORTANT
+
+rewrite help captions
+
+LESS IMPORTANT
+
+better prediction for slow renders or correction after a really slow draw?
+
+fix the few weird jumps with resizing problems.
+
+look into a resize that uses max width the way it uses max height (may be tricky).
+
+touch friendly?
+
+*/
+
+
+
+</script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body onresize = "fract.fixsize();">
+
+<div id="homediv" class="homediv"><a id="homelink" class="homelink" href="http://sciencevsmagic.net/">sciencevsmagic.net</a></div>
+
+<div id="controls" class="controls">
+
+<div id="helpbutton" class="pushbutton" onclick="fract.help.toggle()">
+	<div class="pushback">
+	<a class="pushfore"> ? </a> </div>
+</div>
+
+<a> NICO'S FRACTAL MACHINE</a>
+
+<div class="sliderlinecontainer" onmousedown="fract.angle.jump(event)" onmouseover="fract.help.show('angle')" onmouseout="fract.help.show('default')">
+	<div class="slider" id="angle" onmousedown="fract.angle.down(event)">
+		<div class="sliderlabeldiv">
+			<p class="sltitle">ANGLE</p>
+			<a id="langle"></a><a>&deg;</a>
+		</div>
+	</div>
+	<div class="sliderline"></div>
+</div>
+<div class="sliderlinecontainer" onmousedown="fract.skewangle.jump(event)" onmouseover="fract.help.show('skew')" onmouseout="fract.help.show('default')">
+	<div class="slider" id="skewangle" onmousedown="fract.skewangle.down(event)">
+		<div class="sliderlabeldiv">
+			<p class="sltitle">SKEW</p>
+			<a id="lskewangle"></a><a>&deg;</a>
+		</div>
+	</div>
+	<div class="sliderline"></div>
+</div>
+
+
+<table id="thumbtable">
+	<tr id="thumbarea">
+	</tr>
+</table>
+
+<table>
+	<tr>
+		<td>
+			<a class="button" id="randombutton" onclick="fract.reset();">RESET</a>
+		</td>
+		<td>
+			<a class="button" id="randombutton" onclick="fract.random();">RANDOM</a>
+		</td>
+		<td>
+			<div id="animatecell">
+			<a class="button" id="animatebutton" onclick="fract.animate.toggle();">ANIMATE</a>
+			<div class="menu">
+				<a class="button" id="autobutton" onclick="fract.auto.toggle();">AUTO</a>
+				<a class="button"  id="anglelock" onmousedown="fract.angle.locktoggle()" onmouseover="fract.angle.highlight(1)" onmouseout="fract.angle.highlight(0)">ANGLE</a>
+				<a class="button"  id="skewanglelock" onmousedown="fract.skewangle.locktoggle()" onmouseover="fract.skewangle.highlight(1)" onmouseout="fract.skewangle.highlight(0)">SKEW</a>
+			</div>
+			</div>
+		</td>
+		<td>
+			<a class="button" id="colorbutton" onclick="fract.color.toggle();">COLOR</a>
+		</td>
+		<td>
+			<a class="button" id="trailsbutton" onclick="fract.trails.toggle();">TRAILS</a>
+		</td>
+	</tr>
+</table>
+
+</div>
+
+<div id="helpbox" class="hidden">
+
+<div id="closehelp" class="pushbutton" onclick="fract.help.toggle()">
+	<div class="pushback">
+	<a class="pushfore"> X </a> </div>
+</div>
+
+<div id="helpdefault" class="helpdiv">
+	<p class="heading">NICO'S FRACTAL MACHINE</p>
+	<p class="advice">The shape you see is the combined output of the controls below. Mouse over them to see what they do.
+	</p>
+	<p class="advice">If the page gets too slow, turn some of the parameters down.
+	</p>
+	<p class="advice">Press H or ~ to hide the controls.
+	</p>
+	<a class="blog" href="http://blog.sciencevsmagic.net/science/fractal-machine/">Find out more in this blog post.</a>
+</div>
+
+<div id="helpangle" class="hidden">
+	<p class="heading">ANGLE</p>
+	<img src="angle.png"></img>
+	<p>
+	This slider changes the first and last angles of the motif. Any other angles will sort themselves out to be symmetrical.
+	</p>
+</div>
+
+<div id="helpskew" class="hidden">
+	<p class="heading">SKEW</p>
+	<img src="skew.png"></img>
+	<p>
+	Skew the motif asymmetrically. 
+	</p>
+</div>
+
+<div id="helpdepth" class="hidden">
+	<p class="heading">DEPTH</p>
+	<img src="its.png"></img>
+	<p>
+Set the number of times each line is substituted for the motif.
+	</p>
+</div>
+
+<div id="helpsegments" class="hidden">
+	<p class="heading">SEGMENTS</p>	
+	<img src="seg.png"></img>
+	<p>
+Segment the motif into more or fewer pieces of equal length.
+	</p>
+</div>
+
+<div id="helppoly" class="hidden">
+	<p class="heading">BASE</p>
+	<img src="poly.png"></img>
+	<p>
+Change the base shape the fractal is drawn on. Each side of the polygon will be drawn as one copy of the fractal curve.
+	</p>
+</div>
+
+<div id="helparms" class="hidden">
+	<p class="heading">ARMS</p>
+	<img src="arms.png"></img>
+	<p>
+Add lines that stick out from the motif's corners.
+	</p>
+</div>
+
+<div id="helpmirror" class="hidden">
+	<p class="heading">MIRROR</p>
+	<img src="mirror.png"></img>
+	<p>
+Mirror the motif at every level of the fractal.
+	</p>
+</div>
+
+</div>
+
+<canvas id="main" width="2048" height="2048" style="border:0px solid #000000;" onmousedown="fract.drag.down(event)"></canvas>
+<script>
+fract.init ();
+</script>
+
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://sciencevsmagic.net/statistics/" : "http://sciencevsmagic.net/statistics/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://sciencevsmagic.net/statistics/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+
+</body>
+
+</html> 

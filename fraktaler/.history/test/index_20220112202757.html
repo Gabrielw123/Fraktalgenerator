@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>FRAKTAL GENERATOR</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+
+    <link
+      rel="shortcut icon"
+      type="image/jpg"
+      href="https://19gawe.ssis.nu/img/ico.png"
+    />
+  </head>
+  <body>
+    <!--Skapa en canvas-->
+    <canvas id="canvas"></canvas>
+   
+    <div class="kontroller">
+      <div class="grid-container1">
+        <div class="grid-item">
+          <a class="knappgöm" id="gömknapp" onClick="action();">⏤⏤⏤⏤⏤</a>
+        </div>
+      </div>
+      <div class="grid-container" id="göm1">
+        <div class="grid-item">
+          <a class="knapp" id="infoknapp">INFO</a>
+        </div>
+        <div class="grid-item">
+          <a class="knapp" id="colorknapp" onclick="color();">FÄRG</a>
+        </div>
+       
+        
+      </div>
+      <!--slider vinkel-->
+      <div class="slider-container" id="göm2">
+        <a>VINKEL:<span id="vinkel-out"></span>&deg;</a>
+        <input type="range" min="0" max="360" class="slider" id="vinkel" />
+      </div>
+
+      <div class="grid-container"id="göm3">
+        <div class="grid-item">
+          <a class="knapp" id="längdknapp"
+            >ZOOM:<span id="segment_n"></span
+          ></a>
+        </div>
+        <div class="grid-item">
+          <a class="knapp" id="djupknapp">DJUP:<span id="generation-out"></span></a>
+        </div>
+       
+        <div class="grid-item">
+          <a class="knapp" id="randomknapp" onclick="random();">RANDOM</a>
+        </div>
+        <div class="grid-item">
+          <a class="knapp" id="animeraknapp" onclick="animera();">ANIMERA</a>
+        </div>
+        
+      
+      </div>
+
+      <div class="grid-container1"id="göm4">
+        <div class="grid-item">
+          <input class="input" type="text" placeholder="Axiom" id="axiom" />
+          <input class="input" type="text" placeholder="Rules in" id="rules1" />
+          <input class="input" type="text" placeholder="Rules out" id="rules2" />
+        </div>
+       
+      </div> 
+      <div class="grid-container"id="göm5">
+        <div class="grid-item">
+          <a class="knapp" id="btn">SPARA</a>
+        </div> 
+        <div class="grid-item">
+          <a class="knapp" id="resetknapp" onclick="reset();">RESET</a>
+        </div>
+       
+      </div> 
+      <div class="grid-container1"id="göm6">
+        
+        <div class="grid-item">
+          <p>Axiom:<span id="axiom-out"></span></p>
+          <p>Rules in:<span id="rules1-out"></span></p>
+          <p>Rules out:<span id="rules2-out"></span></p>
+        </div>
+      </div>
+    
+      <!--EXEMPEL-->
+     
+      <div class="grid-container"id="göm7">
+        <div class="grid-item">
+          <a class="knappex" id="Board">Board</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Crystal">Crystal</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Dragon Curve">Dragon Curve</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Hexagonal Gosper">Hexagonal Gosper</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Kochcurve" >Koch curve</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Krishna Anklets">Krishna Anklets</a>
+        </div>   
+        <div class="grid-item">
+          <a class="knappex" id="Lévy curve" >Lévy curve</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="L-System Bushes 1" >L-System Bushes 1</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="L-System Bushes 2">L-System Bushes 2</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Peano Curve">Peano Curve</a>
+        </div> 
+        <div class="grid-item">
+          <a class="knappex" id="Quadratic Snowflake">Quadratic Snowflake
+          </a>
+        </div> 
+        <div class="grid-item">
+          <a class="knappex" id="Rings" >Rings</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Sierpinski Arrowhead">Sierpinski Arrowhead</a>
+        </div> 
+        <div class="grid-item">
+          <a class="knappex" id="Sierpinskisquare">Sierpinski Square</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Snowflake">Snowflake</a>
+        </div> 
+        <div class="grid-item">
+          <a class="knappex" id="Tiles" >Tiles</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Triangle">Triangle</a>
+        </div>  
+        <div class="grid-item">
+          <a class="knappex" id="Von Koch Snowflake" >Von Koch Snowflake</a>
+        </div>
+    </div>
+    <!--Script-->
+    <script src="bruh.js">
+      fraktal.update();
+    </script>
+  </body>
+</html>

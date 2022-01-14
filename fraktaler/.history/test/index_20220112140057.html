@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>FRAKTAL GENERATOR</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+
+    <link
+      rel="shortcut icon"
+      type="image/jpg"
+      href="https://19gawe.ssis.nu/img/ico.png"
+    />
+  </head>
+  <body>
+    <!--Skapa en canvas-->
+    <canvas class="zoomables" id="canvas"></canvas>
+
+    <div class="kontroller">
+      <!--slider vinkel-->
+      <div class="slider-container">
+        <a>VINKEL:<span id="vinkel-out"></span>&deg;</a>
+        <input type="range" min="0" max="360" class="slider" id="vinkel" />
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-item">
+          <a class="knapp" id="längdknapp" onclick="längd();"
+            >LÄNGD:<span id="segment_n"></span
+          ></a>
+        </div>
+
+        <div class="grid-item">
+          <a class="knapp" id="resetknapp" onclick="reset();">RESET</a>
+        </div>
+        <div class="grid-item">
+          <a class="knapp" id="randomknapp" onclick="random();">RANDOM</a>
+        </div>
+        <div class="grid-item">
+          <a class="knapp" id="animeraknapp" onclick="animera();">ANIMERA</a>
+        </div>
+        <div class="grid-item">
+          <input class="input" type="text" placeholder="Axiom" id="axiom" />
+          <input class="input" type="text" placeholder="Rules in" id="rules1" />
+          <input class="input" type="text" placeholder="Rules out" id="rules2" />
+        </div>
+       
+  
+        <div class="grid-item">
+          <a class="knapp" id="btn">save</a>
+        </div> 
+      </div>
+      <div class="grid-container">
+        <div class="grid-item">
+          <p>.</p>
+          <p>Djup:<span id="djup-out"></span></p>
+          <p>Axiom:<span id="axiom-out"></span></p>
+          <p>Rules in:<span id="rules1-out"></span></p>
+          <p>Rules out:<span id="rules2-out"></span></p>
+          <p>
+            Den här generatorn använder sig av
+            <a href="https://en.wikipedia.org/wiki/L-system"
+              >Lindenmayer system</a
+            >
+            för att generera fraktaler
+          </p>
+      
+        </div>
+        
+      </div> 
+      <div class="grid-container1">
+        <div class="grid-item">
+          <a class="knapp" id="infoknapp">INFO</a>
+        </div>
+      </div>EXEMPEL:
+      <!--EXEMPEL-->
+     
+      <div class="grid-container">
+        <div class="grid-item">
+          <a class="knappex" id="Kochcurve" onclick="längd();">Koch curve</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="Sierpinski triangle" onclick="längd();">Sierpinski triangle</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="boxes" onclick="längd();">boxes</a>
+        </div> 
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">L-System Bushes 1</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">L-System Bushes 2</a>
+        </div> 
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Triangle</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Crystal</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Von Koch Snowflake</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Von Koch Snowflake</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Von Koch Snowflake</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Von Koch Snowflake</a>
+        </div>
+        <div class="grid-item">
+          <a class="knappex" id="ex1" onclick="längd();">Von Koch Snowflake</a>
+        </div>
+
+        
+
+    </div>
+
+    <!--Script-->
+    <script src="bruh.js">
+      fraktal.update();
+    </script>
+  </body>
+</html>

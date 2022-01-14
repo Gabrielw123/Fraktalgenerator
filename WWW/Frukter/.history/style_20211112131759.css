@@ -1,0 +1,50 @@
+body {
+  font-family: Verdana;
+  background: rgb(185, 185, 185);
+  padding-top: 5px;
+}
+
+* {
+  margin: auto;
+}
+.huvud {
+  background-color: rgb(0, 191, 255);
+  border: solid 3px;
+  width: 600px;
+  font-size: 15px;
+  text-align: center;
+}
+table {
+  width: 600px;
+}
+td {
+  width: 100%;
+  border: 3px solid;
+  font-size: 25px;
+  text-align: center;
+}
+td {
+  width: 300px;
+  background-color: rgb(234, 0, 255);
+}
+a {
+  color: black;
+}
+a:link {
+  text-decoration: none;
+}
+b {
+  font-family: Garamond;
+}
+qe {
+  font-family: Verdana;
+}
+a:hover {
+  text-decoration: underline;
+}
+.img {
+  height: 100px;
+}
+.text {
+  width: 600px;
+}

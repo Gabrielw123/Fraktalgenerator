@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/ico.png"/>
+    <title>FRACTAL GENERATOR</title>
+    <meta name="description" content="Fraktal generator">
+    <meta name="author" content="Gabriel Wendler">
+    <meta name="keywords" content="HTML5,JavaScript,Logic,Fraktal,CSS">
+    <script src="bruh.js"></script>
+    <link rel="stylesheet" href="ok.css">
+</head>
+<body onresize = "fract.fixsize();">
+    <div id="homediv" class="homediv"><a id="homelink" class="homelink" href="http://19gawe.ssis.nu/fraktaler">19gawe.ssis.nu/fraktaler</a></div>
+
+    <!--kontroller-->
+    <div id="kontroller" class="kontroller">
+
+    <!--Lilla hjälpknappen-->    
+    <div id="hjälpknapp" class="tryckknapp" onclick="fract.help.toggle()">
+        <div class="tryckbak">
+        <a class="pushfore"> ?   </a> </div>
+    </div>
+
+    <a>FRAKTAL GENERATOR</a>
+
+    <div class="sliderlinecontainer" onmousedown="fract.angle.jump(event)" onmouseover="fract.help.show('angle')" onmouseout="fract.help.show('default')">
+        <div class="slider" id="angle" onmousedown="fract.angle.down(event)">
+            <div class="sliderlabeldiv">
+                <p class="sltitle">VINKEL</p>
+                <a id="langle"></a><a>&deg;</a>
+            </div>
+        </div>
+        <div class="sliderline"></div>
+    </div>
+    <div class="sliderlinecontainer" onmousedown="fract.skewangle.jump(event)" onmouseover="fract.help.show('skew')" onmouseout="fract.help.show('default')">
+        <div class="slider" id="skewangle" onmousedown="fract.skewangle.down(event)">
+            <div class="sliderlabeldiv">
+                <p class="sltitle">SKEW</p>
+                <a id="lskewangle"></a><a>&deg;</a>
+            </div>
+        </div>
+        <div class="sliderline"></div>
+    </div>
+
+
+    <table id="thumbtable">
+        <tr id="thumbarea">
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>
+                <a class="button" id="randombutton" onclick="fract.reset();">RESET</a>
+            </td>
+            <td>
+                <a class="button" id="randombutton" onclick="fract.random();">RANDOM</a>
+            </td>
+            <td>
+                <div id="animatecell">
+                <a class="button" id="animatebutton" onclick="fract.animate.toggle();">ANIMERA</a>
+                <div class="menu">
+                    <a class="button" id="autobutton" onclick="fract.auto.toggle();">AUTO</a>
+                    <a class="button"  id="anglelock" onmousedown="fract.angle.locktoggle()" onmouseover="fract.angle.highlight(1)" onmouseout="fract.angle.highlight(0)">VINKEL</a>
+                    <a class="button"  id="skewanglelock" onmousedown="fract.skewangle.locktoggle()" onmouseover="fract.skewangle.highlight(1)" onmouseout="fract.skewangle.highlight(0)">SKEW</a>
+                </div>
+                </div>
+            </td>
+            <td>
+                <a class="button" id="colorbutton" onclick="fract.color.toggle();">FÄRG</a>
+            </td>
+            <td>
+                <a class="button" id="trailsbutton" onclick="fract.trails.toggle();">SPÅR</a>
+            </td>
+        </tr>
+    </table>
+
+    </div>
+
+    <div id="helpbox" class="hidden">
+
+        <div id="closehelp" class="tryckknapp" onclick="fract.help.toggle()">
+            <div class="tryckbak">
+            <a class="pushfore"> X </a> </div>
+        </div>
+
+        <div id="helpdefault" class="helpdiv">
+            <p class="heading">Fraktal generator</p>
+            <p class="advice">Formen du ser är den kombinerade utmatningen från kontrollerna nedan. Håll muspekaren över dem för att se vad de gör.
+            </p>
+            <p class="advice">Om sidan blir för långsam, vrid ner några av parametrarna.
+            </p>
+            <p class="advice">Tryck på H eller ~ för att dölja kontrollerna.
+            </p>
+            <a class="blog" href="https://19gawe.ssis.nu/fraktaler/">Läs mer i detta blogginlägg.
+            </a>
+        </div>
+
+        <div id="helpangle" class="hidden">
+            <p class="heading">VINKEL</p>
+            <img src="angle.png"></img>
+            <p>Detta reglage ändrar motivets första och sista vinklar. Alla andra vinklar kommer att sortera sig symmetriska.
+            </p>
+        </div>
+
+        <div id="helpskew" class="hidden">
+            <p class="heading">SKEW</p>
+            <img src="skew.png"></img>
+            <p>Skew ändrar asymmetrin.
+            </p>
+        </div>
+
+        <div id="helpdepth" class="hidden">
+            <p class="heading">DJUP</p>
+            <img src="its.png"></img>
+            <p>Ange antalet gånger varje rad ersätts med motivet.
+            </p>
+        </div>
+
+        <div id="helpsegments" class="hidden">
+            <p class="heading">SEGMENT</p>	
+            <img src="seg.png"></img>
+            <p>Dela upp motivet i fler eller färre bitar av lika längd.
+            </p>
+        </div>
+
+        <div id="helppoly" class="hidden">
+            <p class="heading">BAS</p>
+            <img src="poly.png"></img>
+            <p>Ändra basformen som fraktalen dras på. Varje sida av polygonen ritas som en kopia av fraktalkurvan.
+            </p>
+        </div>
+
+        <div id="helparms" class="hidden">
+            <p class="heading">ARMAR</p>
+            <img src="arms.png"></img>
+            <p>Lägg till linjer som sticker ut från frktalernas hörn.
+            </p>
+        </div>
+
+        <div id="helpmirror" class="hidden">
+            <p class="heading">SPEGLA</p>
+            <img src="mirror.png"></img>
+            <p>Spegla motivet på varje nivå av fraktalen.
+            </p>
+        </div>
+
+    </div>
+
+    <canvas id="main" width="2048" height="2048" style="border:0px solid #000000;" onmousedown="fract.drag.down(event)"></canvas>
+    <script>fract.init ();</script>
+
+
+
+</body>
+</html> 

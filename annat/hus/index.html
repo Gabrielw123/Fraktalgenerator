@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/ico.png"/>
+    <title>Hus</title>
+    <style>
+    </style>
+</head>
+<body>
+    <br><a href="https://19gawe.ssis.nu/annat">Gå tillbaka</a></br>
+    <canvas id="myCanvas" width="1260" height="500"
+            style="border:1px solid #d3d3d3;">
+        Your browser does not support the canvas element.
+    </canvas>
+
+    <script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+// Rektangel //
+ctx.fillStyle = "grey";
+ctx.fillRect(600,340, 350,180);
+
+// Rektangel //
+ctx.fillStyle = "grey";
+ctx.fillRect(500,340, 300,30);
+
+// Rektangel //
+ctx.fillStyle = "yellow";
+ctx.fillRect(650,390, 50,50);
+
+// Rektangel //
+ctx.fillStyle = "yellow";
+ctx.fillRect(750,390, 50,50);
+
+// Rektangel //
+ctx.fillStyle = "yellow";
+ctx.fillRect(850,390, 50,50);
+
+// Rektangel //
+ctx.fillStyle = "green";
+ctx.fillRect(0,495, 10000,10);
+
+// Rektangel //
+ctx.fillStyle = "blue";
+ctx.fillRect(350, 470, 150,30);
+
+// Rektangel //
+ctx.fillStyle = "blue";
+ctx.fillRect(350, 470, 150, 30);
+// Rektangel //
+ctx.fillStyle = "grey";
+ctx.fillRect(350, 495, 150, 5);
+// Rektangel //
+ctx.fillStyle = "grey";
+ctx.fillRect(350, 465, 5, 40);
+// Rektangel //
+ctx.fillStyle = "grey";
+ctx.fillRect(500, 465, 5, 40);
+
+// Polygon tak //
+ctx.fillStyle = "Grey";
+ctx.beginPath();
+ctx.moveTo(500,340);
+ctx.lineTo(950,340);
+ctx.lineTo(700,200);
+ctx.lineTo(600,200);
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+
+//streck
+ctx.beginPath();
+ctx.moveTo(350,470);
+ctx.lineTo(320,500);
+ctx.strokeStyle = "grey";
+ctx.stroke();
+
+// Cirkel //
+ctx.beginPath();
+ctx.arc(1200,0,80,0,2*Math.PI);
+ctx.fillStyle = "Yellow";
+ctx.fill();
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Fractal generator">
+    <meta name="author" content="Gabriel Wendler">
+    <meta name="keywords" content="HTML5,JavaScript,Logic,Fractal,Machine">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REAL</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/ico.png"/>
+</head>
+<body>
+
+    <p>FRAKTAL GENERATOR</p>
+    
+    <!--två sliders-->
+
+
+    <!--5 knappar-->
+
+
+    <!--5 andra-->
+
+    <a class="button" id="randombutton" onclick="fract.random();">RESET</a>
+    <a class="button" id="randombutton" onclick="fract.random();">RANDOM</a>
+    <a class="button" id="randombutton" onclick="fract.random();">RANDOM</a>
+    
+    <div id="animatecell">
+        <a class="button" id="animatebutton" onclick="fract.animate.toggle();">ANIMATE</a>
+        <div class="menu">
+            <a class="button" id="autobutton" onclick="fract.auto.toggle();">AUTO</a>
+            <a class="button"  id="anglelock" onmousedown="fract.angle.locktoggle()" onmouseover="fract.angle.highlight(1)" onmouseout="fract.angle.highlight(0)">ANGLE</a>
+            <a class="button"  id="skewanglelock" onmousedown="fract.skewangle.locktoggle()" onmouseover="fract.skewangle.highlight(1)" onmouseout="fract.skewangle.highlight(0)">SKEW</a>
+        </div>
+    </div>
+    
+    <a class="button" id="randombutton" onclick="fract.random();">RANDOM</a>
+
+    <canvas id="main" width="2048" height="2048" style="border:0px solid #000000;" onmousedown="fract.drag.down(event)"></canvas>
+    <script>update.init();</script>
+</body>
+</html>

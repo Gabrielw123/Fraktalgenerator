@@ -1,0 +1,46 @@
+* {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  padding-left: 10%;
+}
+.kuk {
+  display: grid;
+  grid-template-columns: 100%;
+}
+
+.grid-item {
+  text-align: center;
+}
+.container {
+  width: 100%;
+  height: 100px;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: blue;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.link {
+  font-size: 20px;
+  text-align: center;
+}
+img {
+  width: 190px;
+  height: 150px;
+  position: absolute;
+}
+.imgbox {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+h4 {
+  font-weight: lighter;
+}

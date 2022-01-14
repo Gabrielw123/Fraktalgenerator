@@ -1,0 +1,35 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  background: rgb(201, 199, 199);
+}
+.huvud {
+  background-color: yellow;
+  border-bottom: solid 3px;
+  padding: 15px;
+  width: 100%;
+}
+.head {
+  text-align: center;
+  font-size: 15px;
+  font-family: "Times New Roman", Times, serif;
+}
+.img {
+  height: auto;
+  width: 60%;
+}
+.boxen {
+  width: 100%;
+  position: relative;
+}
+.text {
+  font-size: 15px;
+  font-weight: 400px;
+  font-family: "Times New Roman", Times, serif;
+  top: 0%;
+  left: 60%;
+  position: absolute;
+  width: 23%;
+}
+a:link {
+  text-decoration: none;
+}

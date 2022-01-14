@@ -1,0 +1,40 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 25% 25% 25%;
+  padding-left: 24%;
+}
+.grid-item {
+  text-align: center;
+}
+
+* {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.link {
+  display: inline;
+  font-size: 20px;
+  text-align: center;
+}
+img {
+  width: 190px;
+  height: 150px;
+  position: absolute;
+}
+.imglinkbox {
+  position: relative;
+  top: 100px;
+  height: 300px;
+  width: 100%;
+}
+
+.text-box {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: blue;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+}
