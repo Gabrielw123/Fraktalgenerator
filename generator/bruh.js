@@ -2,187 +2,152 @@
 INFO LÄS README.txt
 
 Källor för lite info
-https://en.wikipedia.org/wiki/L-system#Types_of_L-systems
-https://codesandbox.io/s/fraktal-generator-forked-g76j8?file=/sketch.js
-http://paulbourke.net/fractals/lsys/
 https://www.sidefx.com/docs/houdini/nodes/sop/lsystem.html
+https://en.wikipedia.org/wiki/L-system#Types_of_L-systems
+http://paulbourke.net/fractals/lsys/
 http://www1.biologie.uni-hamburg.de/b-online/e28_3/lsys.html
+
+generator
 https://www.kevs3d.co.uk/dev/lsystems/
 https://piratefsh.github.io/p5js-art/public/lsystems/
-
+https://codesandbox.io/s/fraktal-generator-forked-g76j8?file=/sketch.js
 */
 
 //hur snabbt den animerar
 let animatespeed = 100;
+//hur snabbt färgen ändras på alternativ 6
 let colorspeed = 300;
+//random variablar
 let arr = ["F", "F", "+", "-"];
 let hello = ["", "", "", "", ""];
 //lite variablar
-let genButton;
-let resButton;
-let guiText;
-color_n = 0;
+let genKnapp;
+//färg variabel mätare
+
 let generation = 0;
 let maxGeneration = 5;
-let length;
+let längd;
 let angle;
+let info_n = 0;
 
-let rules1 = "";
-let rules2 = "";
-//göm från början
-document.getElementById("göm7").style.visibility = "hidden";
-document.getElementById("göminfo").style.visibility = "hidden";
-document.getElementById("göminfotext").style.visibility = "hidden";
+//huvud variablar
+let color_n = 0;
+let vinkel = 0;
+let djup = 0;
+let x = 0;
+let y = 0;
 
-//color
+//color variablar
 let r = 255,
   g = 0,
   b = 0;
-//första load
-let axiom = "F+F+F+F";
-let rules = [
-  {
-    in: "F",
-    out: "F+F-F-FF+F+F-F",
-  },
-];
-
-//save button för egna input på fraktaler
-const spara = document.getElementById("spara");
-
-spara.addEventListener("click", function () {
-  let axiom2 = document.getElementById("axiom").value;
-  let stringrules = document.getElementById("rules2").value;
-  if (stringrules.includes("=")) {
-    const arrules = stringrules.split("=");
-    rules1 = arrules[0];
-    rules2 = arrules[1];
-  }
-  if (axiom2.length <= 0) {
-    alert("OBS: Du har ingen AXIOM");
-  }
-  if (!stringrules.includes("=")) {
-    alert("OBS: Du måste ha ett (=) i RULES");
-  }
-  if (rules1.length >= 2 || rules1.length <= 0) {
-    alert("OBS: Du måste ha ETT tecken före (=) i RULES");
-  }
-  if (rules2.length <= 0) {
-    alert("OBS: Du har inga RULES efter (=)");
-  }
-  if (!axiom2.includes(rules1)) {
-    alert(
-      "OBS: Ditt tecken i RULES före (=) har inte något tecken som förekommer i AXIOMEN"
-    );
-  }
-  confirm(
-    "OBS: Tryck på DJUP för att se din fraktal\n" +
-      "Axiom: " +
-      axiom2 +
-      "\nRules in: " +
-      rules1 +
-      "\nRules out: " +
-      rules2
-  );
-
-  axiom = axiom2;
-  rules = [
-    {
-      in: rules1,
-      out: rules2,
-    },
-  ];
-});
-
-//göm UI
-let hidden = false;
-function action() {
-  hidden = !hidden;
-  if (hidden) {
-    document.getElementById("göm1").style.visibility = "hidden";
-    document.getElementById("göm2").style.visibility = "hidden";
-    document.getElementById("göm3").style.visibility = "hidden";
-    document.getElementById("göm4").style.visibility = "hidden";
-    document.getElementById("göm5").style.visibility = "hidden";
-    document.getElementById("göm6").style.visibility = "hidden";
-    if (document.getElementById("göm7").style.visibility === "visible") {
-      document.getElementById("göm7").style.visibility = "hidden";
-    }
-  } else {
-    document.getElementById("göm1").style.visibility = "visible";
-    document.getElementById("göm2").style.visibility = "visible";
-    document.getElementById("göm3").style.visibility = "visible";
-    document.getElementById("göm4").style.visibility = "visible";
-    document.getElementById("göm5").style.visibility = "visible";
-    document.getElementById("göm6").style.visibility = "visible";
-    document.getElementById("göm7").style.visibility = "visible";
-  }
-}
-let info_n = 0;
-let infoknapp = document.getElementById("infoknapp");
-let hiddeninfo = true;
-function actioninfo() {
-  hiddeninfo = !hiddeninfo;
-  if (hiddeninfo) {
-    document.getElementById("göminfo").style.visibility = "hidden";
-    document.getElementById("göminfotext").style.visibility = "hidden";
-  } else {
-    document.getElementById("göminfo").style.visibility = "visible";
-    document.getElementById("göminfotext").style.visibility = "visible";
-  }
-  info_n++;
-  if (info_n === 1) {
-    infoknapp.className = "knappon";
-  }
-  if (info_n === 2) {
-    infoknapp.className = "knapp";
-    info_n = 0;
-  }
-}
-
-let hidden1 = true;
-function example() {
-  hidden1 = !hidden1;
-  if (hidden1) {
-    document.getElementById("göm7").style.visibility = "hidden";
-  } else {
-    document.getElementById("göm7").style.visibility = "visible";
-  }
-}
-
+//första fraktalen vid start
+let axiom = "F++F++F";
+let rules = [{
+  in: "F",
+  out: "F-F++F-F",
+}, ];
 let sentence = axiom;
+//Andra rad
+animera_n = 0;
+//timer räknare
+let t;
+
+//göm från början
+document.getElementById("göminfo").style.visibility = "hidden";
+
+//Random funktion
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //så man kan genera ett tal mellan två värden.
+}
+
+// Canvas Mouse Drag
+let isDown = false;
+let x1 = window.innerWidth / 2;
+let y1 = window.innerHeight / 2;
+let dragDiff = {
+  x1: 0,
+  y1: 0
+};
+
+function BörjaDra(e) {
+  if (e.offsetX > 180) {
+    isDown = true;
+    dragDiff.x1 = e.offsetX - x1;
+    dragDiff.y1 = e.offsetY - y1;
+    turtle();
+  }
+}
+
+function stopDra(e) {
+  if (e.offsetX > 180) {
+    isDown = false;
+    stopDra.x1 = e.offsetX;
+    stopDra.y1 = e.offsetY;
+  }
+}
+
+function movedrag(e) {
+  if (e.offsetX > 180) {
+    e.preventDefault();
+    if (isDown) {
+      x1 = e.offsetX - dragDiff.x1;
+      y1 = e.offsetY - dragDiff.y1;
+      turtle();
+    }
+  }
+}
+let scale = 1
+
+function zoom(e) {
+  scale += e.deltaY * -0.01;
+  // Restrict scale
+  scale = Math.min(Math.max(1, scale), 10);
+  setup();
+}
+//kollar om man gör någon av dessa funktioner ex mousedown
+const move = document.getElementById("move");
+move.addEventListener("mousedown", BörjaDra);
+move.addEventListener("mouseup", stopDra);
+move.addEventListener("mousemove", movedrag);
+move.addEventListener("mousewheel", zoom);
 
 //start funktion
 function setup() {
   createCanvas(windowWidth - 40, windowHeight - 25);
   angle = radians(vinkel.value);
-  length = segment_n * 3;
+  längd = scale;
   turtle();
-  drawGUI();
 }
 
-//color problem
-setInterval(function () {
-  if (r > 0 && b <= 0) {
-    r -= 10;
-    g += 10;
-  }
-  if (g > 0 && r <= 0) {
-    g -= 10;
-    b += 10;
-  }
-  if (b > 0 && g <= 0) {
-    r += 10;
-    b -= 10;
-  }
-  $("#color").text("rgb(" + r + "," + g + "," + b + ")");
-  $("#color").css("color", "rgb(" + r + "," + g + "," + b + ")");
-  turtle();
-}, colorspeed);
+//color loop
+$(document).ready(function () {
+  //color problem
+  setInterval(function () {
+    if (r > 0 && b <= 0) {
+      r -= 10;
+      g += 10;
+    }
+    if (g > 0 && r <= 0) {
+      g -= 10;
+      b += 10;
+    }
+    if (b > 0 && g <= 0) {
+      r += 10;
+      b -= 10;
+    }
+    $("#color").text("rgb(" + r + "," + g + "," + b + ")");
+    $("#color").css("color", "rgb(" + r + "," + g + "," + b + ")");
+    turtle();
+  }, colorspeed);
+});
 
-function generate() {
-  length = segment_n * 3;
-
+//generera fraktal
+function generera() {
+  längd = scale;
+  console.log(längd);
   let nextSentence = "";
 
   for (let i = 0; i < sentence.length; i++) {
@@ -203,6 +168,7 @@ function generate() {
   sentence = nextSentence;
   turtle();
 }
+//ändra färg och steg fraktal
 function turtle() {
   resetMatrix();
   background(0);
@@ -225,14 +191,16 @@ function turtle() {
   if (color_n === 5) {
     stroke(r, g, b); //rgb flera färger
   }
-  translate(window.innerWidth / 2, window.innerHeight / 2);
-
+  //vart man ska börja rita
+  translate(x1, y1);
+  //för varje character i "sentence" kör loopen
   for (let i = 0; i <= sentence.length; i++) {
     let currentChar = sentence.charAt(i);
 
+    //olika funktioner för de olika characters
     if (currentChar === "F") {
-      line(0, 0, 0, -length);
-      translate(0, -length);
+      line(0, 0, 0, -längd);
+      translate(0, -längd);
     } else if (currentChar === "+") {
       rotate(angle);
     } else if (currentChar === "-") {
@@ -245,171 +213,47 @@ function turtle() {
   }
 }
 
-let djupknapp = document.getElementById("djupknapp");
-djupknapp.onclick = function () {
-  if (generation < maxGeneration) {
-    generate();
-  }
-  generation++;
-  if (generation > 5) {
-    generation = 1;
-    sentence = axiom;
-    generate();
-  }
-  let generationout = document.getElementById("generation-out");
-  generationout.innerHTML = generation;
-  let axiomout = document.getElementById("axiom-out");
-  axiomout.innerHTML = axiom;
-  let rules1out = document.getElementById("rules1-out");
-  rules1out.innerHTML = rules[0].in;
-  let rules2out = document.getElementById("rules2-out");
-  rules2out.innerHTML = rules[0].out;
-};
-
-//skriver ut värden och saker på skärmer för användaren
-function drawGUI() {
-  genButton = createButton("DJUP");
-  genButton.size(85, 20);
-  genButton.position(-200, 260);
-  genButton.mousePressed(function () {
-    if (generation < maxGeneration) {
-      generate();
-    }
-    generation++;
-    if (generation > 5) {
-      generation = 1;
-      sentence = axiom;
-      generate();
-    }
-    let generationout = document.getElementById("generation-out");
-    generationout.innerHTML = generation;
-    let axiomout = document.getElementById("axiom-out");
-    axiomout.innerHTML = axiom;
-    let rules1out = document.getElementById("rules1-out");
-    rules1out.innerHTML = rules[0].in;
-    let rules2out = document.getElementById("rules2-out");
-    rules2out.innerHTML = rules[0].out;
-  });
-}
-
-//!Exemepel knappar
-
-//Andra rad
-animera_n = 0;
-
-let c1 = 0;
-let t;
-let timer_is_on = 0;
-
-//Random funktion
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-
+//!UI
 let fraktal = (function () {
-  //js funktion
-  const c = document.getElementById("canvas");
-  let ctx = c.getContext("2d");
-
-  //får bredden och höjden av hemsidan du har på din enhet
-  c.width = window.innerWidth;
-  c.height = window.innerHeight;
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 2;
-
-  //!SLIDERS
-  let vinkel = document.getElementById("vinkel");
-  let vinkelout = document.getElementById("vinkel-out");
-  vinkelout.innerHTML = vinkel.value;
-
-  //gör saker med vinkel
-  vinkel.oninput = function () {
-    vinkelout.innerHTML = this.value;
-    update();
-  };
-
-  //SEGMENT
-  let segment = document.getElementById("längdknapp");
-  segment.onclick = function () {
-    segment_n++;
-    if (segment_n === 6) {
-      segment_n = 1;
+  //!göm UI
+  let gömknapp = document.getElementById("gömknapp");
+  let hidden = false;
+  gömknapp.onclick = function () {
+    hidden = !hidden;
+    if (hidden) {
+      document.getElementById("göm").style.visibility = "hidden";
+    } else {
+      document.getElementById("göm").style.visibility = "visible";
     }
-    document.getElementById("segment_n").innerHTML = segment_n;
-    update();
-  };
-  //!RESET
-  let reset = document.getElementById("resetknapp");
-  reset.onclick = function () {
-    sentence = axiom;
-    turtle();
-    vinkel.value = 90;
-    segment_n = 3;
-    generation = 5;
-    axiom = "F+F+F+F";
-    rules = [
-      {
-        in: "F",
-        out: "F+F-F-FF+F+F-F",
-      },
-    ];
-    //stönga av animera
-    clearTimeout(t);
-    animera.className = "knapp";
-    c1 = 0;
-    animera_n = 0;
-    //update this
-    update();
   };
 
-  //!RANDOM
-  let random = document.getElementById("randomknapp");
-  random.onclick = function () {
-    for (let i = 0; i < 8; i++) {
-      hello[i] = arr[Math.floor(Math.random() * arr.length)];
+  //!INFO
+  let infoknapp = document.getElementById("infoknapp");
+  let hiddeninfo = true;
+  infoknapp.onclick = function () {
+    hiddeninfo = !hiddeninfo;
+    if (hiddeninfo) {
+      document.getElementById("göminfo").style.visibility = "hidden";
+      document.getElementById("göminfo").style.height = "0px";
+      document.getElementById("göm2").style.visibility = "visible";
+      document.getElementById("göm2").style.height = "315px";
+
+    } else {
+      document.getElementById("göminfo").style.visibility = "visible";
+      document.getElementById("göminfo").style.height = "328px";
+      document.getElementById("göm2").style.visibility = "hidden";
+      document.getElementById("göm2").style.height = "0%";
     }
-    axiom = "F" + hello[5] + hello[6] + hello[7];
-    rules = [
-      {
-        in: "F",
-        out:
-          "F" +
-          hello[0] +
-          hello[1] +
-          hello[2] +
-          hello[3] +
-          hello[4] +
-          hello[5] +
-          hello[6] +
-          hello[7],
-      },
-    ];
-    vinkel.value = getRandomInt(0, 361);
-    segment_n = 4;
-    generation = 3;
-    update();
-  };
-
-  //!ANIMERA
-
-  let animera = document.getElementById("animeraknapp");
-  animera.onclick = function () {
-    animera_n++;
-    if (animera_n === 1) {
-      timedCount();
-      animera.className = "knappon";
+    info_n++;
+    if (info_n === 1) {
+      infoknapp.className = "knappon";
     }
-    if (animera_n === 2) {
-      clearTimeout(t);
-      animera.className = "knapp";
-      c1 = 0;
-      animera_n = 0;
+    if (info_n === 2) {
+      infoknapp.className = "knapp";
+      info_n = 0;
     }
   };
   //!COLOR
-
   let color = document.getElementById("colorknapp");
   color.onclick = function () {
     color_n++;
@@ -434,11 +278,140 @@ let fraktal = (function () {
     update();
   };
 
+  //!SLIDERS VINKEL
+  vinkel = document.getElementById("vinkel");
+  let vinkelout = document.getElementById("vinkel-out");
+  vinkelout.innerHTML = vinkel.value;
+
+  //gör saker med vinkel
+  vinkel.oninput = function () {
+    vinkelout.innerHTML = this.value;
+    update();
+  };
+
+  //!DJUP
+  djup = document.getElementById("djupknapp");
+  let generationout = document.getElementById("generation-out");
+  generationout.innerHTML = djup.value;
+
+  djup.oninput = function () {
+    sentence = axiom;
+    generation = djup.value;
+    for (let i = 0; i < djup.value; i++) {
+      generera();
+    }
+    generationout.innerHTML = this.value;
+    update();
+  };
+
+
+  //!RANDOM
+  let random = document.getElementById("randomknapp");
+  random.onclick = function () {
+    for (let i = 0; i < 8; i++) {
+      hello[i] = arr[Math.floor(Math.random() * arr.length)];
+    }
+    axiom = "F" + hello[5] + hello[6] + hello[7];
+    rules = [{
+      in: "F",
+      out: "F" +
+        hello[0] +
+        hello[1] +
+        hello[2] +
+        hello[3] +
+        hello[4] +
+        hello[5] +
+        hello[6] +
+        hello[7],
+    }, ];
+    vinkel.value = getRandomInt(0, 361);
+    scale = 4;
+    djup.value = 3;
+    update();
+  };
+
+  //!ANIMERA
+  let animera = document.getElementById("animeraknapp");
+  animera.onclick = function () {
+    animera_n++;
+    if (animera_n === 1) {
+      timedCount();
+      animera.className = "knappon";
+    }
+    if (animera_n === 2) {
+      clearTimeout(t);
+      animera.className = "knapp";
+      animera_n = 0;
+    }
+  };
+
+  //!SAVE button för egna input på fraktaler
+  const spara = document.getElementById("spara");
+  spara.onclick = function () {
+    axiom = document.getElementById("axiom").value;
+    let stringrules = document.getElementById("rules2").value;
+    if (stringrules.includes("=")) {
+      const arrules = stringrules.split("=");
+      rules = [{
+        in: arrules[0],
+        out: arrules[1],
+      }, ];
+    }
+    if (axiom.length <= 0) {
+      alert("OBS: Du har ingen AXIOM");
+    }
+    if (!stringrules.includes("=")) {
+      alert("OBS: Du måste ha ett (=) i RULES");
+    }
+    if (rules[0].in.length >= 2 || rules[0].in.length <= 0) {
+      alert("OBS: Du måste ha ETT tecken före (=) i RULES");
+    }
+    if (rules[0].out.length <= 0) {
+      alert("OBS: Du har inga RULES efter (=)");
+    }
+    if (!axiom.includes(rules[0].in)) {
+      alert(
+        "OBS: Ditt tecken i RULES före (=) har inte något tecken som förekommer i AXIOMEN"
+      );
+    }
+    confirm(
+      "OBS: Tryck på DJUP för att se din fraktal\n" +
+      "Axiom: " +
+      axiom +
+      "\nRules in: " +
+      rules[0].in +
+      "\nRules out: " +
+      rules[0].out
+    );
+  };
+
+  //!RESET
+  let reset = document.getElementById("resetknapp");
+  reset.onclick = function () {
+    color_n = 0;
+    vinkel.value = 60;
+    scale = 5;
+    djup.value = 1;
+    x1 = window.innerWidth / 2;
+    y1 = window.innerHeight / 2;
+    axiom = "F++F++F";
+    rules = [{
+      in: "F",
+      out: "F-F++F-F",
+    }, ];
+    sentence = axiom;
+    //stönga av animera
+    clearTimeout(t);
+    animera.className = "knapp";
+    animera_n = 0;
+    //update this
+    update();
+  };
+
   //!Uppdatera allt/////////////////////////////
   let update = function () {
     //skriver ut de nya väderna
     setup();
-
     //animeringshastighet gör det snabbare när det är närare visa värden
     if (
       (vinkel.value > 150 && vinkel.value < 220) ||
@@ -453,19 +426,14 @@ let fraktal = (function () {
     ) {
       animatespeed = 100;
     }
-    //Updaterar sliders och bilder/knappar
-    vinkelout.innerHTML = vinkel.value;
-    document.getElementById("färg_n").innerHTML = color_n + 1;
-    document.getElementById("segment_n").innerHTML = segment_n;
-    let generationout = document.getElementById("generation-out");
-    generationout.innerHTML = generation;
 
-    let axiomout = document.getElementById("axiom-out");
-    axiomout.innerHTML = axiom;
-    let rules1out = document.getElementById("rules1-out");
-    rules1out.innerHTML = rules[0].in;
-    let rules2out = document.getElementById("rules2-out");
-    rules2out.innerHTML = rules[0].out;
+    //Updaterar sliders och knappar
+    vinkelout.innerHTML = vinkel.value;
+    generationout.innerHTML = djup.value;
+    document.getElementById("färg_n").innerHTML = color_n + 1;
+    document.getElementById("axiom-out").innerHTML = axiom;
+    document.getElementById("rules1-out").innerHTML = rules[0].in;
+    document.getElementById("rules2-out").innerHTML = rules[0].out;
     //sparar hashen för hemsidan
     save();
   };
@@ -476,9 +444,9 @@ let fraktal = (function () {
       "#" +
       vinkel.value +
       "," +
-      segment_n +
+      scale +
       "," +
-      generation +
+      djup.value +
       "," +
       axiom +
       "," +
@@ -496,47 +464,43 @@ let fraktal = (function () {
       //Sliders
       vinkel.value = test[0];
       //Knappar
-      segment_n = test[1];
-      generation = test[2];
+      scale = test[1];
+      djup.value = test[2];
       axiom = test[3];
       rules[0].in = test[4];
       rules[0].out = test[5];
 
       if (
         vinkel.value == undefined ||
-        segment_n === undefined ||
-        generation === undefined ||
+        scale === undefined ||
+        djup.value === undefined ||
         axiom === undefined ||
         rules[0].in === undefined ||
         rules[0].out === undefined
       ) {
         //Sliders
-        vinkel.value = 40;
+        vinkel.value = 60;
         //Knappar
-        segment_n = 1;
-        generation = 1;
-        let axiom = "F+F+F+F";
-        let rules = [
-          {
-            in: "F",
-            out: "F+F-F-FF+F+F-F",
-          },
-        ];
+        scale = 1;
+        djup.value = 1;
+        let axiom = "F++F++F";
+        let rules = [{
+          in: "F",
+          out: "F-F++F-F",
+        }, ];
       }
     } else {
       //Sliders
-      vinkel.value = 40;
+      vinkel.value = 60;
       //Knappar
-      segment_n = 1;
+      scale = 1;
       //Knappar
-      generation = 1;
-      let axiom = "F+F+F+F";
-      let rules = [
-        {
-          in: "F",
-          out: "F+F-F-FF+F+F-F",
-        },
-      ];
+      djup.value = 1;
+      let axiom = "F++F++F";
+      let rules = [{
+        in: "F",
+        out: "F-F++F-F",
+      }, ];
     }
     save();
   };
@@ -544,173 +508,147 @@ let fraktal = (function () {
   load();
 
   //!EXEMPEL
-  //Exemplerna är ifrån http://paulbourke.net/fractals/lsys/
-  //save button för egna input på fraktaler
   const Kochcurve = document.getElementById("Kochcurve");
   Kochcurve.addEventListener("click", function () {
     axiom = "-F";
-    rules = [
-      {
-        in: "F",
-        out: "F+F--F+F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "F+F--F+F",
+    }, ];
     vinkel.value = 60;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
-
   const Sierpinskisquare = document.getElementById("Sierpinskisquare");
   Sierpinskisquare.addEventListener("click", function () {
     axiom = "F+XF+F+XF";
-    rules = [
-      {
-        in: "X",
-        out: "XF-F+F-XF+F+XF-F+F-X",
-      },
-    ];
+    rules = [{
+      in: "X",
+      out: "XF-F+F-XF+F+XF-F+F-X",
+    }, ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
 
   const LSystemBushes1 = document.getElementById("L-System Bushes 1");
   LSystemBushes1.addEventListener("click", function () {
     axiom = "F";
-    rules = [
-      {
-        in: "F",
-        out: "FF+[+F-F-F]-[-F+F+F]",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "FF+[+F-F-F]-[-F+F+F]",
+    }, ];
     vinkel.value = 22.5;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
 
   const LSystemBushes2 = document.getElementById("L-System Bushes 2");
   LSystemBushes2.addEventListener("click", function () {
     axiom = "F";
-    rules = [
-      {
-        in: "F",
-        out: "F[+FF][-FF]F[-F][+F]F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "F[+FF][-FF]F[-F][+F]F",
+    }, ];
     vinkel.value = 35;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
 
   const Board = document.getElementById("Board");
   Board.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [
-      {
-        in: "F",
-        out: "FF+F+F+F+FF",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "FF+F+F+F+FF",
+    }, ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
 
   const Triangle = document.getElementById("Triangle");
   Triangle.addEventListener("click", function () {
     axiom = "F+F+F";
-    rules = [
-      {
-        in: "F",
-        out: "F-F+F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "F-F+F",
+    }, ];
     vinkel.value = 120;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const Crystal = document.getElementById("Crystal");
   Crystal.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [
-      {
-        in: "F",
-        out: "FF+F++F+F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "FF+F++F+F",
+    }, ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const VonKochSnowflake = document.getElementById("Von Koch Snowflake");
   VonKochSnowflake.addEventListener("click", function () {
     axiom = "F++F++F";
-    rules = [
-      {
-        in: "F",
-        out: "F-F++F-F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "F-F++F-F",
+    }, ];
     vinkel.value = 60;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const Tiles = document.getElementById("Tiles");
   Tiles.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [
-      {
-        in: "F",
-        out: "FF+F-F+F+FF",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "FF+F-F+F+FF",
+    }, ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
 
   const Rings = document.getElementById("Rings");
   Rings.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [
-      {
-        in: "F",
-        out: "FF+F+F+F+F+F-F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "FF+F+F+F+F+F-F",
+    }, ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const Lévycurve = document.getElementById("Lévy curve");
   Lévycurve.addEventListener("click", function () {
     axiom = "F";
-    rules = [
-      {
-        in: "F",
-        out: "+F--F+",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "+F--F+",
+    }, ];
     vinkel.value = 45;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const HexagonalGosper = document.getElementById("Hexagonal Gosper");
   HexagonalGosper.addEventListener("click", function () {
     axiom = "XF";
-    rules = [
-      {
+    rules = [{
         in: "X",
         out: "X+YF++YF-FX--FXFX-YF+",
       },
@@ -720,15 +658,14 @@ let fraktal = (function () {
       },
     ];
     vinkel.value = 60;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const DragonCurve = document.getElementById("Dragon Curve");
   DragonCurve.addEventListener("click", function () {
     axiom = "FX";
-    rules = [
-      {
+    rules = [{
         in: "X",
         out: "X+YF+",
       },
@@ -738,15 +675,14 @@ let fraktal = (function () {
       },
     ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const SierpinskiArrowhead = document.getElementById("Sierpinski Arrowhead");
   SierpinskiArrowhead.addEventListener("click", function () {
     axiom = "YF";
-    rules = [
-      {
+    rules = [{
         in: "X",
         out: "YF+XF+Y",
       },
@@ -756,29 +692,26 @@ let fraktal = (function () {
       },
     ];
     vinkel.value = 60;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const QuadraticSnowflake = document.getElementById("Quadratic Snowflake");
   QuadraticSnowflake.addEventListener("click", function () {
     axiom = "F";
-    rules = [
-      {
-        in: "F",
-        out: "F-F+F+F-F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "F-F+F+F-F",
+    }, ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const PeanoCurve = document.getElementById("Peano Curve");
   PeanoCurve.addEventListener("click", function () {
     axiom = "X";
-    rules = [
-      {
+    rules = [{
         in: "X",
         out: "XFYFX+F+YFXFY-F-XFYFX",
       },
@@ -788,36 +721,44 @@ let fraktal = (function () {
       },
     ];
     vinkel.value = 90;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const snowflake = document.getElementById("Snowflake");
   snowflake.addEventListener("click", function () {
     axiom = "F-F-F-F-F";
-    rules = [
-      {
-        in: "F",
-        out: "F-F++F+F-F-F",
-      },
-    ];
+    rules = [{
+      in: "F",
+      out: "F-F++F+F-F-F",
+    }, ];
     vinkel.value = 72;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
     update();
   });
   const KrishnaAnklets = document.getElementById("Krishna Anklets");
   KrishnaAnklets.addEventListener("click", function () {
     axiom = "-X--X";
-    rules = [
-      {
-        in: "X",
-        out: "XFX--XFX",
-      },
-    ];
+    rules = [{
+      in: "X",
+      out: "XFX--XFX",
+    }, ];
     vinkel.value = 45;
-    segment_n = 1;
-    generation = 5;
+    scale = 5;
+    djup.value = 1;
+    update();
+  });
+  const Wendler = document.getElementById("Wendler");
+  Wendler.addEventListener("click", function () {
+    axiom = "-X--X";
+    rules = [{
+      in: "X",
+      out: "XFX--XFX",
+    }, ];
+    vinkel.value = 45;
+    scale = 5;
+    djup.value = 1;
     update();
   });
 })();
