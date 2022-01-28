@@ -1,45 +1,29 @@
 /*
 INFO LÄS README.txt
-
-Källor för lite info
-https://www.sidefx.com/docs/houdini/nodes/sop/lsystem.html
-https://en.wikipedia.org/wiki/L-system#Types_of_L-systems
-http://paulbourke.net/fractals/lsys/
-http://www1.biologie.uni-hamburg.de/b-online/e28_3/lsys.html
-
-generator
-https://www.kevs3d.co.uk/dev/lsystems/
-https://piratefsh.github.io/p5js-art/public/lsystems/
-https://codesandbox.io/s/fraktal-generator-forked-g76j8?file=/sketch.js
 */
 
 //hur snabbt den animerar
 let animatespeed = 100;
-//hur snabbt färgen ändras på alternativ 6
-let colorspeed = 300;
+//hur snabbt färgen ändras på alternativ 6/color settings
+let colorspeed = 500;
+let colorchange = 15;
+let colorinterval = ""
 //random variablar
 let arr = ["F", "F", "+", "-"];
 let hello = ["", "", "", "", ""];
-//lite variablar
-let genKnapp;
-//färg variabel mätare
 
-let generation = 0;
-let maxGeneration = 5;
-let längd;
-let info_n = 0;
-
-//huvud variablar
-let color_n = 0;
-let vinkel = 0;
-let djup = 0;
-let x = 0;
-let y = 0;
-
-//color variablar
-let r = 255,
+//huvud, color, animera, timer och generation variablar
+let color = 0,
+  vinkel = 0,
+  djup = 0,
+  info_n = 0,
+  r = 255,
   g = 0,
-  b = 0;
+  b = 0,
+  animera = 0,
+  timer, generation = 0,
+  maxGeneration = 5;
+
 //första fraktalen vid start
 let axiom = "F++F++F";
 let rules = [{
@@ -47,22 +31,12 @@ let rules = [{
   out: "F-F++F-F",
 }, ];
 let mening = axiom;
-//Andra rad
-animera_n = 0;
-//timer räknare
-let t;
 
 //göm från början
 document.getElementById("göminfo").style.visibility = "hidden";
 
-//Random funktion
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); //så man kan genera ett tal mellan två värden.
-}
-
-// Canvas Mouse Drag
+// variabar för att zomma och flyta på fraktalen
+let scale = 1
 let down = false;
 let x1 = window.innerWidth / 2;
 let y1 = window.innerHeight / 2;
@@ -71,6 +45,7 @@ let dragDiff = {
   y1: 0
 };
 
+//när användaren börjar dra med musen
 function BörjaDra(e) {
   if (e.offsetX > 180) {
     down = true;
@@ -79,7 +54,7 @@ function BörjaDra(e) {
     draw();
   }
 }
-
+//när användaren slutar dra med musen
 function stopDra(e) {
   if (e.offsetX > 180) {
     down = false;
@@ -87,7 +62,7 @@ function stopDra(e) {
     stopDra.y1 = e.offsetY;
   }
 }
-
+//när användaren drar med musen
 function movedrag(e) {
   if (e.offsetX > 180) {
     e.preventDefault();
@@ -98,8 +73,7 @@ function movedrag(e) {
     }
   }
 }
-let scale = 1
-
+//när användaren zoomar dra med musen
 function zoom(e) {
   scale += e.deltaY * -0.01;
   // Restrict scale
@@ -116,36 +90,11 @@ move.addEventListener("mousewheel", zoom);
 //start funktion
 function setup() {
   createCanvas(windowWidth - 40, windowHeight - 25);
-  radians(vinkel.value);
-  längd = scale;
   draw();
 }
 
-//color loop
-$(document).ready(function () {
-  //color problem
-  setInterval(function () {
-    if (r > 0 && b <= 0) {
-      r -= 10;
-      g += 10;
-    }
-    if (g > 0 && r <= 0) {
-      g -= 10;
-      b += 10;
-    }
-    if (b > 0 && g <= 0) {
-      r += 10;
-      b -= 10;
-    }
-    $("#color").text("rgb(" + r + "," + g + "," + b + ")");
-    $("#color").css("color", "rgb(" + r + "," + g + "," + b + ")");
-    draw();
-  }, colorspeed);
-});
-
 //generera fraktal
 function generera() {
-  längd = scale;
   let nextmening = "";
 
   for (let i = 0; i < mening.length; i++) {
@@ -171,22 +120,22 @@ function draw() {
   resetMatrix();
   background(0);
   //color
-  if (color_n === 0) {
+  if (color === 0) {
     stroke(255); //white
   }
-  if (color_n === 1) {
+  if (color === 1) {
     stroke(0, 0, 255); //blue
   }
-  if (color_n === 2) {
+  if (color === 2) {
     stroke(0, 128, 0); //green
   }
-  if (color_n === 3) {
+  if (color === 3) {
     stroke(255, 0, 0); //red
   }
-  if (color_n === 4) {
+  if (color === 4) {
     stroke(255, 165, 0); //orange
   }
-  if (color_n === 5) {
+  if (color === 5) {
     stroke(r, g, b); //rgb flera färger
   }
   //vart man ska börja rita
@@ -197,8 +146,8 @@ function draw() {
 
     //olika funktioner för de olika characters
     if (nuchar === "F") {
-      line(0, 0, 0, -längd);
-      translate(0, -längd);
+      line(0, 0, 0, -scale);
+      translate(0, -scale);
     } else if (nuchar === "+") {
       rotate(radians(vinkel.value));
     } else if (nuchar === "-") {
@@ -257,29 +206,38 @@ let fraktal = (function () {
       info_n = 0;
     }
   };
+
   //!COLOR
-  let color = document.getElementById("colorknapp");
-  color.onclick = function () {
-    color_n++;
-    if (color_n === 6) {
-      color_n = 0;
+  let colorknapp = document.getElementById("colorknapp");
+  colorknapp.onclick = function () {
+    //stänger av colorloop
+    clearInterval(colorinterval);
+    color++;
+    if (color === 6) {
+      color = 0;
+    }
+    //sätta på color change
+    if (color === 5) {
+      colorinterval = setInterval(colorloop, colorspeed);
     }
     update();
   };
 
-  timedCount = function () {
-    let v = parseInt(vinkel.value);
-    v = v + 1;
-
-    if (v === 361) {
-      v = 0;
+  //color loop
+  function colorloop() {
+    if (r > 0 && b <= 0) {
+      r -= colorchange;
+      g += colorchange;
     }
-    //updatera UI
-    vinkel.value = v;
-    vinkelout.innerHTML = vinkel.value;
-    //vänta
-    t = setTimeout(timedCount, animatespeed);
-    update();
+    if (g > 0 && r <= 0) {
+      g -= colorchange;
+      b += colorchange;
+    }
+    if (b > 0 && g <= 0) {
+      r += colorchange;
+      b -= colorchange;
+    }
+    draw();
   };
 
   //!SLIDERS VINKEL
@@ -334,19 +292,41 @@ let fraktal = (function () {
     update();
   };
 
+  //Random funktion
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //så man kan genera ett tal mellan två värden.
+  }
+
   //!ANIMERA
-  let animera = document.getElementById("animeraknapp");
-  animera.onclick = function () {
-    animera_n++;
-    if (animera_n === 1) {
+  let animeraknapp = document.getElementById("animeraknapp");
+  animeraknapp.onclick = function () {
+    animera++;
+    if (animera === 1) {
       timedCount();
-      animera.className = "knappon";
+      animeraknapp.className = "knappon";
     }
-    if (animera_n === 2) {
-      clearTimeout(t);
-      animera.className = "knapp";
-      animera_n = 0;
+    if (animera === 2) {
+      clearTimeout(timer);
+      animeraknapp.className = "knapp";
+      animera = 0;
     }
+  };
+
+  timedCount = function () {
+    let v = parseInt(vinkel.value);
+    v = v + 1;
+
+    if (v === 361) {
+      v = 0;
+    }
+    //updatera UI
+    vinkel.value = v;
+    vinkelout.innerHTML = vinkel.value;
+    //vänta
+    timer = setTimeout(timedCount, animatespeed);
+    update();
   };
 
   //!SAVE button för egna input på fraktaler
@@ -392,7 +372,7 @@ let fraktal = (function () {
   //!RESET
   let reset = document.getElementById("resetknapp");
   reset.onclick = function () {
-    color_n = 0;
+    color = 0;
     vinkel.value = 60;
     scale = 5;
     djup.value = 1;
@@ -405,9 +385,9 @@ let fraktal = (function () {
     }, ];
     mening = axiom;
     //stönga av animera
-    clearTimeout(t);
+    clearTimeout(timer);
     animera.className = "knapp";
-    animera_n = 0;
+    animera = 0;
     //update this
     update();
   };
@@ -416,6 +396,7 @@ let fraktal = (function () {
   let update = function () {
     //skriver ut de nya väderna
     setup();
+
     //animeringshastighet gör det snabbare när det är närare visa värden
     if (
       (vinkel.value > 150 && vinkel.value < 220) ||
@@ -434,7 +415,7 @@ let fraktal = (function () {
     //Updaterar sliders och knappar
     vinkelout.innerHTML = vinkel.value;
     generationout.innerHTML = djup.value;
-    document.getElementById("färg_n").innerHTML = color_n + 1;
+    document.getElementById("färg_n").innerHTML = color + 1;
     document.getElementById("axiom-out").innerHTML = axiom;
     document.getElementById("rules1-out").innerHTML = rules[0].in;
     document.getElementById("rules2-out").innerHTML = rules[0].out;
@@ -753,16 +734,5 @@ let fraktal = (function () {
     djup.value = 1;
     update();
   });
-  const Wendler = document.getElementById("Wendler");
-  Wendler.addEventListener("click", function () {
-    axiom = "-X--X";
-    rules = [{
-      in: "X",
-      out: "XFX--XFX",
-    }, ];
-    vinkel.value = 45;
-    scale = 5;
-    djup.value = 1;
-    update();
-  });
+
 })();

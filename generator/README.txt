@@ -8,11 +8,9 @@ START TUTORIAL:
 3. Ändra "VINKEL" och "ZOOM" för att anpassa din fraktal
 
 REGLER:
-    • F = Move forward by line length drawing a line
-    • + = Turn left by turning angle
-    • - = Turn right by turning angle
-    • [ = Push current drawing state onto stack
-    • ] = Pop current drawing state from the stack
+    • F = Betyder rita ett streck framåt
+    • + och - = Betyder sväng höger eller vänster enligt en given vinkel
+    • [ och ] = Skapa en ny förgrening som sparar position och vinkel
 
 INPUT BOX:
     • AXIOM INPUT EX:F
@@ -29,7 +27,7 @@ KNAPPAR OCH SLIDER:
     • ANIMERA: Animerar fraktalen med vinkeln
     • SPARA: Spara dina inputs
     • RESET: Återställa till start fraktalen
-    • EXEMPEL: Visa exempel på fraktaler. OBS: tryck på DJUP efter att du har valt ett exemepel.
+    • EXEMPEL: Visa exempel på fraktaler. OBS: tryck på DJUP efter att du har valt ett exempel.
 
 TUTORIAL FÖR ATT SKAPA EGEN FRAKTAL:
 1. Skriv in din "AXIOM"
