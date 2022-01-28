@@ -8,15 +8,23 @@
   <link rel="stylesheet" href="style.css" />
   <title>Fraktal Generator</title>
   <link rel="shortcut icon" type="image/jpg" href="https://19gawe.ssis.nu/img/fractal.png" />
-  <!--script för hemsida-->
+  <!--Script för hemsida
+    p5.js is a JavaScript library for creative coding, with a focus on making coding 
+    accessible and inclusive for artists, designers, educators, beginners, and anyone 
+    else! p5.js is free and open-source because we believe software, and the tools to 
+    learn it, should be accessible to everyone.
+  -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-  <!--fading script-->
+  <!--fading/ color script
+  jQuery, är ett Javascript-bibliotek som är tänkt att förenkla HTML-, DOM- och CSS-modifikation, 
+  händelsehantering, animering och AJAX för att snabba upp webbutvecklingen.
+
+  Använt vid färg skiftande funktionen
+  -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 
 <body id="move">
-
-
   <div id="bruh" style="
     border: 1px solid white;" class="kontroller">
     <div onmousedown="return false" onselectstart="return false" class="grid-container1">
@@ -24,7 +32,6 @@
         <a class="knappgöm" id="gömknapp">⏤⏤⏤⏤⏤</a>
       </div>
     </div>
-
     <div onmousedown="return false" onselectstart="return false" class="grid-container" id="göm1">
       <div class="grid-item">
         <a class="knapp" id="infoknapp"">INFO</a>
@@ -88,7 +95,7 @@
       </div>
     </div>
     <!--EXEMPEL-->
-    <div onmousedown="return false" onselectstart="return false" class="grid-container1" id="göm8">
+    <div onmousedown="return false" onselectstart="return false" class="grid-container1" id="göm3">
       <div onmousedown="return false" onselectstart="return false" class="dropdown">
         <button class="dropbtn">EXEMPEL</button>
         <div class="dropdown-content">

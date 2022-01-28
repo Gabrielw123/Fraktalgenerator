@@ -27,7 +27,6 @@ let genKnapp;
 let generation = 0;
 let maxGeneration = 5;
 let längd;
-let angle;
 let info_n = 0;
 
 //huvud variablar
@@ -47,7 +46,7 @@ let rules = [{
   in: "F",
   out: "F-F++F-F",
 }, ];
-let sentence = axiom;
+let mening = axiom;
 //Andra rad
 animera_n = 0;
 //timer räknare
@@ -64,7 +63,7 @@ function getRandomInt(min, max) {
 }
 
 // Canvas Mouse Drag
-let isDown = false;
+let down = false;
 let x1 = window.innerWidth / 2;
 let y1 = window.innerHeight / 2;
 let dragDiff = {
@@ -74,16 +73,16 @@ let dragDiff = {
 
 function BörjaDra(e) {
   if (e.offsetX > 180) {
-    isDown = true;
+    down = true;
     dragDiff.x1 = e.offsetX - x1;
     dragDiff.y1 = e.offsetY - y1;
-    turtle();
+    draw();
   }
 }
 
 function stopDra(e) {
   if (e.offsetX > 180) {
-    isDown = false;
+    down = false;
     stopDra.x1 = e.offsetX;
     stopDra.y1 = e.offsetY;
   }
@@ -92,10 +91,10 @@ function stopDra(e) {
 function movedrag(e) {
   if (e.offsetX > 180) {
     e.preventDefault();
-    if (isDown) {
+    if (down) {
       x1 = e.offsetX - dragDiff.x1;
       y1 = e.offsetY - dragDiff.y1;
-      turtle();
+      draw();
     }
   }
 }
@@ -117,9 +116,9 @@ move.addEventListener("mousewheel", zoom);
 //start funktion
 function setup() {
   createCanvas(windowWidth - 40, windowHeight - 25);
-  angle = radians(vinkel.value);
+  radians(vinkel.value);
   längd = scale;
-  turtle();
+  draw();
 }
 
 //color loop
@@ -140,36 +139,35 @@ $(document).ready(function () {
     }
     $("#color").text("rgb(" + r + "," + g + "," + b + ")");
     $("#color").css("color", "rgb(" + r + "," + g + "," + b + ")");
-    turtle();
+    draw();
   }, colorspeed);
 });
 
 //generera fraktal
 function generera() {
   längd = scale;
-  console.log(längd);
-  let nextSentence = "";
+  let nextmening = "";
 
-  for (let i = 0; i < sentence.length; i++) {
+  for (let i = 0; i < mening.length; i++) {
     let found = false;
-    let currentChar = sentence.charAt(i);
+    let nuchar = mening.charAt(i);
 
     for (let j = 0; j < rules.length; j++) {
-      if (currentChar === rules[j].in) {
+      if (nuchar === rules[j].in) {
         found = true;
-        nextSentence += rules[j].out;
+        nextmening += rules[j].out;
         break;
       }
     }
     if (!found) {
-      nextSentence += currentChar;
+      nextmening += nuchar;
     }
   }
-  sentence = nextSentence;
-  turtle();
+  mening = nextmening;
+  draw();
 }
 //ändra färg och steg fraktal
-function turtle() {
+function draw() {
   resetMatrix();
   background(0);
   //color
@@ -193,21 +191,21 @@ function turtle() {
   }
   //vart man ska börja rita
   translate(x1, y1);
-  //för varje character i "sentence" kör loopen
-  for (let i = 0; i <= sentence.length; i++) {
-    let currentChar = sentence.charAt(i);
+  //för varje character i "mening"/"rules" kör loopen
+  for (let i = 0; i <= mening.length; i++) {
+    let nuchar = mening.charAt(i);
 
     //olika funktioner för de olika characters
-    if (currentChar === "F") {
+    if (nuchar === "F") {
       line(0, 0, 0, -längd);
       translate(0, -längd);
-    } else if (currentChar === "+") {
-      rotate(angle);
-    } else if (currentChar === "-") {
-      rotate(-angle);
-    } else if (currentChar === "[") {
+    } else if (nuchar === "+") {
+      rotate(radians(vinkel.value));
+    } else if (nuchar === "-") {
+      rotate(-radians(vinkel.value));
+    } else if (nuchar === "[") {
       push();
-    } else if (currentChar === "]") {
+    } else if (nuchar === "]") {
       pop();
     }
   }
@@ -215,15 +213,21 @@ function turtle() {
 
 //!UI
 let fraktal = (function () {
-  //!göm UI
+  //!göm UI med knappen på toppen
   let gömknapp = document.getElementById("gömknapp");
   let hidden = false;
   gömknapp.onclick = function () {
     hidden = !hidden;
     if (hidden) {
-      document.getElementById("göm").style.visibility = "hidden";
+      document.getElementById("göm1").style.visibility = "hidden";
+      document.getElementById("göm2").style.visibility = "hidden";
+      document.getElementById("göm3").style.visibility = "hidden";
+      document.getElementById("bruh").style.border = "1px solid black";
     } else {
-      document.getElementById("göm").style.visibility = "visible";
+      document.getElementById("göm1").style.visibility = "visible";
+      document.getElementById("göm2").style.visibility = "visible";
+      document.getElementById("göm3").style.visibility = "visible";
+      document.getElementById("bruh").style.border = "1px solid white";
     }
   };
 
@@ -295,7 +299,7 @@ let fraktal = (function () {
   generationout.innerHTML = djup.value;
 
   djup.oninput = function () {
-    sentence = axiom;
+    mening = axiom;
     generation = djup.value;
     for (let i = 0; i < djup.value; i++) {
       generera();
@@ -399,7 +403,7 @@ let fraktal = (function () {
       in: "F",
       out: "F-F++F-F",
     }, ];
-    sentence = axiom;
+    mening = axiom;
     //stönga av animera
     clearTimeout(t);
     animera.className = "knapp";
