@@ -17,10 +17,6 @@ body {
   color: white;
 }
 
-.big {
-  background: forestgreen;
-}
-
 .kontroller {
   width: 176px;
   height: 99.5%;
@@ -80,7 +76,7 @@ body {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: #ffffff;
+  background: white;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -92,7 +88,7 @@ body {
   cursor: pointer;
 }
 
-a.knapp {
+.knapp {
   background: white;
   color: black;
   width: 80px;
@@ -102,9 +98,10 @@ a.knapp {
   border: 1px solid white;
   display: table-cell;
   vertical-align: middle;
+  text-align: center;
 }
 
-a.knapp:hover {
+.knapp:hover {
   background: black;
   border-radius: 5px;
   color: white;
@@ -117,7 +114,7 @@ a.knapp:hover {
   z-index: -1;
 }
 
-a.knappon {
+.knappon {
   width: 80px;
   background: black;
   color: white;
@@ -129,21 +126,21 @@ a.knappon {
   border: 1px solid white;
 }
 
-a.knappex {
+.knappex {
   background: white;
   color: black;
   text-align: center;
   cursor: pointer;
-  font-size: 13px;
-  width: 100px;
-  height: 30px;
+  font-size: 12px;
+  width: 80px;
+  height: 28px;
   display: table-cell;
   vertical-align: middle;
   border-radius: 5px;
   border: 1px solid white;
 }
 
-a.knappex:hover {
+.knappex:hover {
   background: black;
   border-radius: 5px;
   color: white;
@@ -160,7 +157,7 @@ a.knappex:hover {
   border-radius: 5px;
 }
 
-a.knappgöm:hover {
+.knappgöm:hover {
   background: white;
   border-radius: 5px;
   color: black;

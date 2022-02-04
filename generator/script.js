@@ -35,6 +35,7 @@ let mening = axiom;
 //göm från början
 document.getElementById("göminfo").style.visibility = "hidden";
 
+
 // variabar för att zomma och flyta på fraktalen
 let scale = 1
 let down = false;
@@ -189,11 +190,11 @@ let fraktal = (function () {
       document.getElementById("göminfo").style.visibility = "hidden";
       document.getElementById("göminfo").style.height = "0px";
       document.getElementById("göm2").style.visibility = "visible";
-      document.getElementById("göm2").style.height = "315px";
+      document.getElementById("göm2").style.height = "325px";
 
     } else {
       document.getElementById("göminfo").style.visibility = "visible";
-      document.getElementById("göminfo").style.height = "328px";
+      document.getElementById("göminfo").style.height = "340px";
       document.getElementById("göm2").style.visibility = "hidden";
       document.getElementById("göm2").style.height = "0%";
     }
@@ -272,8 +273,9 @@ let fraktal = (function () {
   random.onclick = function () {
     for (let i = 0; i < 8; i++) {
       hello[i] = arr[Math.floor(Math.random() * arr.length)];
+      console.log(hello[i]);
     }
-    axiom = "F" + hello[5] + hello[6] + hello[7];
+    axiom = "F" + arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)];
     rules = [{
       in: "F",
       out: "F" +
@@ -333,18 +335,40 @@ let fraktal = (function () {
   const spara = document.getElementById("spara");
   spara.onclick = function () {
     axiom = document.getElementById("axiom").value;
-    let stringrules = document.getElementById("rules2").value;
-    if (stringrules.includes("=")) {
-      const arrules = stringrules.split("=");
+
+    var textArea = document.getElementById('rules2');
+    var rows = textArea.value.split('\n');
+
+    if (rows.length >= 2) {
+      console.log(rows[0])
+      console.log(rows[1])
+      const row1 = rows[0].split("=");
+      const row2 = rows[1].split("=");
       rules = [{
-        in: arrules[0],
-        out: arrules[1],
-      }, ];
+          in: row1[0],
+          out: row1[1],
+        },
+        {
+          in: row2[0],
+          out: row2[1],
+        },
+      ];
+      console.log("bruh")
     }
+    if (rows.length === 1) {
+      const row1 = rows[0].split("=");
+      rules = [{
+        in: row1[0],
+        out: row1[1],
+      }, ];
+      console.log("bruh")
+    }
+    // Loop through all rows
+
     if (axiom.length <= 0) {
       alert("OBS: Du har ingen AXIOM");
     }
-    if (!stringrules.includes("=")) {
+    if (!rows[0].includes("=")) {
       alert("OBS: Du måste ha ett (=) i RULES");
     }
     if (rules[0].in.length >= 2 || rules[0].in.length <= 0) {
@@ -375,7 +399,7 @@ let fraktal = (function () {
     color = 0;
     vinkel.value = 60;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     x1 = window.innerWidth / 2;
     y1 = window.innerHeight / 2;
     axiom = "F++F++F";
@@ -467,7 +491,7 @@ let fraktal = (function () {
         vinkel.value = 60;
         //Knappar
         scale = 1;
-        djup.value = 1;
+        djup.value = 0;
         let axiom = "F++F++F";
         let rules = [{
           in: "F",
@@ -480,7 +504,7 @@ let fraktal = (function () {
       //Knappar
       scale = 1;
       //Knappar
-      djup.value = 1;
+      djup.value = 0;
       let axiom = "F++F++F";
       let rules = [{
         in: "F",
@@ -502,7 +526,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 60;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const Sierpinskisquare = document.getElementById("Sierpinskisquare");
@@ -514,7 +538,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
 
@@ -527,7 +551,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 22.5;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
 
@@ -540,7 +564,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 35;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
 
@@ -553,7 +577,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
 
@@ -566,7 +590,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 120;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const Crystal = document.getElementById("Crystal");
@@ -578,7 +602,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const VonKochSnowflake = document.getElementById("Von Koch Snowflake");
@@ -590,7 +614,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 60;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const Tiles = document.getElementById("Tiles");
@@ -602,7 +626,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
 
@@ -615,7 +639,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const Lévycurve = document.getElementById("Lévy curve");
@@ -627,7 +651,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 45;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const HexagonalGosper = document.getElementById("Hexagonal Gosper");
@@ -644,7 +668,7 @@ let fraktal = (function () {
     ];
     vinkel.value = 60;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const DragonCurve = document.getElementById("Dragon Curve");
@@ -661,7 +685,7 @@ let fraktal = (function () {
     ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const SierpinskiArrowhead = document.getElementById("Sierpinski Arrowhead");
@@ -678,7 +702,7 @@ let fraktal = (function () {
     ];
     vinkel.value = 60;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const QuadraticSnowflake = document.getElementById("Quadratic Snowflake");
@@ -690,7 +714,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const PeanoCurve = document.getElementById("Peano Curve");
@@ -707,7 +731,7 @@ let fraktal = (function () {
     ];
     vinkel.value = 90;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const snowflake = document.getElementById("Snowflake");
@@ -719,7 +743,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 72;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
   const KrishnaAnklets = document.getElementById("Krishna Anklets");
@@ -731,7 +755,7 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 45;
     scale = 5;
-    djup.value = 1;
+    djup.value = 0;
     update();
   });
 

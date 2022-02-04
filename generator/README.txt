@@ -1,4 +1,4 @@
-                                              KONTROLLER
+KONTROLLER
 
 Den här fraktal generatorn använder sig av Lindenmayer systemet (https://en.wikipedia.org/wiki/L-system)
 
