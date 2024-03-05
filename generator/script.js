@@ -78,7 +78,7 @@ function movedrag(e) {
 function zoom(e) {
   scale += e.deltaY * -0.01;
   // Restrict scale
-  scale = Math.min(Math.max(1, scale), 10);
+  scale = Math.min(Math.max(1, scale), 80);
   setup();
 }
 //kollar om man gör någon av dessa funktioner ex mousedown
@@ -86,7 +86,7 @@ const move = document.getElementById("move");
 move.addEventListener("mousedown", BörjaDra);
 move.addEventListener("mouseup", stopDra);
 move.addEventListener("mousemove", movedrag);
-move.addEventListener("mousewheel", zoom);
+move.addEventListener("wheel", zoom);
 
 //start funktion
 function setup() {
@@ -97,65 +97,69 @@ function setup() {
 //generera fraktal
 function generera() {
   let nextmening = "";
-
+  //mening är axiomen i början
   for (let i = 0; i < mening.length; i++) {
     let found = false;
-    let nuchar = mening.charAt(i);
-
+    //för varje tecken i meningen/axiomen
+    let tecken = mening.charAt(i);
+    //för varje tecken i regel körs denna 
     for (let j = 0; j < rules.length; j++) {
-      if (nuchar === rules[j].in) {
+      //om teckenet är samma som regel tecknet körs denna
+      if (tecken === rules[j].in) {
         found = true;
         nextmening += rules[j].out;
         break;
       }
     }
     if (!found) {
-      nextmening += nuchar;
+      nextmening += tecken;
     }
   }
   mening = nextmening;
+  console.log(mening);
   draw();
 }
 //ändra färg och steg fraktal
 function draw() {
-  resetMatrix();
+  resetMatrix(0);
   background(0);
   //color
   if (color === 0) {
     stroke(255); //white
-  }
-  if (color === 1) {
+  } else if (color == 1) {
     stroke(0, 0, 255); //blue
-  }
-  if (color === 2) {
+  } else if (color == 2) {
     stroke(0, 128, 0); //green
-  }
-  if (color === 3) {
+  } else if (color == 3) {
     stroke(255, 0, 0); //red
-  }
-  if (color === 4) {
+  } else if (color == 4) {
     stroke(255, 165, 0); //orange
-  }
-  if (color === 5) {
+  } else if (color == 5) {
     stroke(r, g, b); //rgb flera färger
   }
   //vart man ska börja rita
   translate(x1, y1);
   //för varje character i "mening"/"rules" kör loopen
   for (let i = 0; i <= mening.length; i++) {
-    let nuchar = mening.charAt(i);
-
-    //olika funktioner för de olika characters
-    if (nuchar === "F") {
+    //sätter "tecken" till nuvarande tecknet i meningen/axiomen
+    let tecken = mening.charAt(i);
+    //går ett steg framåt
+    if (tecken === "F") {
       line(0, 0, 0, -scale);
       translate(0, -scale);
-    } else if (nuchar === "+") {
+    }
+    //vrider den åt höger med vinkeln du har angivit
+    else if (tecken === "+") {
       rotate(radians(vinkel.value));
-    } else if (nuchar === "-") {
+    }
+    //vrider den åt vänster med vinkeln du har angivit
+    else if (tecken === "-") {
       rotate(-radians(vinkel.value));
-    } else if (nuchar === "[") {
+    }
+    //gör en förgrening, Gör det som står inom hackparateserna och sedan går tillbaka till teckenet innan hackparantesen
+    else if (tecken === "[") {
       push();
-    } else if (nuchar === "]") {
+    } else if (tecken === "]") {
       pop();
     }
   }
@@ -273,7 +277,7 @@ let fraktal = (function () {
   random.onclick = function () {
     for (let i = 0; i < 8; i++) {
       hello[i] = arr[Math.floor(Math.random() * arr.length)];
-      console.log(hello[i]);
+
     }
     axiom = "F" + arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)];
     rules = [{
@@ -339,9 +343,9 @@ let fraktal = (function () {
     var textArea = document.getElementById('rules2');
     var rows = textArea.value.split('\n');
 
+    //skit dålig
     if (rows.length >= 2) {
-      console.log(rows[0])
-      console.log(rows[1])
+
       const row1 = rows[0].split("=");
       const row2 = rows[1].split("=");
       rules = [{
@@ -353,7 +357,6 @@ let fraktal = (function () {
           out: row2[1],
         },
       ];
-      console.log("bruh")
     }
     if (rows.length === 1) {
       const row1 = rows[0].split("=");
@@ -361,36 +364,36 @@ let fraktal = (function () {
         in: row1[0],
         out: row1[1],
       }, ];
-      console.log("bruh")
+
     }
     // Loop through all rows
 
     if (axiom.length <= 0) {
       alert("OBS: Du har ingen AXIOM");
-    }
-    if (!rows[0].includes("=")) {
+    } else if (!rows[0].includes("=")) {
       alert("OBS: Du måste ha ett (=) i RULES");
-    }
-    if (rules[0].in.length >= 2 || rules[0].in.length <= 0) {
+    } else if (rules[0].in.length >= 2 || rules[0].in.length <= 0) {
       alert("OBS: Du måste ha ETT tecken före (=) i RULES");
-    }
-    if (rules[0].out.length <= 0) {
+    } else if (rules[0].out.length <= 0) {
       alert("OBS: Du har inga RULES efter (=)");
-    }
-    if (!axiom.includes(rules[0].in)) {
+    } else if (!axiom.includes(rules[0].in)) {
       alert(
         "OBS: Ditt tecken i RULES före (=) har inte något tecken som förekommer i AXIOMEN"
       );
+    } else {
+      confirm(
+        "OBS: Tryck på DJUP för att se din fraktal\n" +
+        "Axiom: " +
+        axiom +
+        "\nRules in: " +
+        rules[0].in +
+        "\nRules out: " +
+        rules[0].out
+      );
+
+
     }
-    confirm(
-      "OBS: Tryck på DJUP för att se din fraktal\n" +
-      "Axiom: " +
-      axiom +
-      "\nRules in: " +
-      rules[0].in +
-      "\nRules out: " +
-      rules[0].out
-    );
+
   };
 
   //!RESET
@@ -416,6 +419,69 @@ let fraktal = (function () {
     update();
   };
 
+  //!SAVE OCH LOAD
+  let save = function () {
+    let ruleid = "#" + vinkel.value + "," + scale + "," + color + "," + djup.value + "," + axiom + "," + rules[0].in + "," + rules[0].out;
+    window.location = String(window.location).replace(/\#.*$/, "") + ruleid;
+  };
+
+  let load = function () {
+    let link = window.location.toString();
+    if (link.includes("#")) {
+      const linkinfo = link.split("#");
+      const partoflink = linkinfo[1].split(",");
+      //Sliders
+      vinkel.value = partoflink[0];
+      //Knappar
+      scale = partoflink[1];
+      color = partoflink[2];
+      djup.value = partoflink[3];
+      axiom = partoflink[4];
+      rules[0].in = partoflink[5];
+      rules[0].out = partoflink[6];
+
+
+      if (
+        vinkel.value == undefined ||
+        scale === undefined ||
+        djup.value === undefined ||
+        axiom === undefined ||
+        rules[0].in === undefined ||
+        rules[0].out === undefined ||
+        color === undefined
+      ) {
+
+        //Sliders
+        vinkel.value = 60;
+        //Knappar
+        scale = 10;
+        djup.value = 0;
+        let axiom = "F++F++F";
+        let rules = [{
+          in: "F",
+          out: "F-F++F-F",
+        }, ];
+        color = 0;
+      }
+    } else {
+
+      //Sliders
+      vinkel.value = 60;
+      //Knappar
+      scale = 10;
+      //Knappar
+      djup.value = 0;
+      let axiom = "F++F++F";
+      let rules = [{
+        in: "F",
+        out: "F-F++F-F",
+      }, ];
+      color = 0;
+    }
+    save();
+  };
+  //!START
+  load();
   //!Uppdatera allt/////////////////////////////
   let update = function () {
     //skriver ut de nya väderna
@@ -438,8 +504,8 @@ let fraktal = (function () {
 
     //Updaterar sliders och knappar
     vinkelout.innerHTML = vinkel.value;
-    generationout.innerHTML = djup.value;
-    document.getElementById("färg_n").innerHTML = color + 1;
+    generationout.innerHTML = parseInt(djup.value) + 1;
+    document.getElementById("färg_n").innerHTML = color;
     document.getElementById("axiom-out").innerHTML = axiom;
     document.getElementById("rules1-out").innerHTML = rules[0].in;
     document.getElementById("rules2-out").innerHTML = rules[0].out;
@@ -447,74 +513,7 @@ let fraktal = (function () {
     save();
   };
 
-  //!SAVE OCH LOAD
-  let save = function () {
-    let ruleid =
-      "#" +
-      vinkel.value +
-      "," +
-      scale +
-      "," +
-      djup.value +
-      "," +
-      axiom +
-      "," +
-      rules[0].in +
-      "," +
-      rules[0].out;
-    window.location = String(window.location).replace(/\#.*$/, "") + ruleid;
-  };
 
-  let load = function () {
-    let d = window.location.toString();
-    if (d.includes("#")) {
-      const myArr = d.split("#");
-      const test = myArr[1].split(",");
-      //Sliders
-      vinkel.value = test[0];
-      //Knappar
-      scale = test[1];
-      djup.value = test[2];
-      axiom = test[3];
-      rules[0].in = test[4];
-      rules[0].out = test[5];
-
-      if (
-        vinkel.value == undefined ||
-        scale === undefined ||
-        djup.value === undefined ||
-        axiom === undefined ||
-        rules[0].in === undefined ||
-        rules[0].out === undefined
-      ) {
-        //Sliders
-        vinkel.value = 60;
-        //Knappar
-        scale = 1;
-        djup.value = 0;
-        let axiom = "F++F++F";
-        let rules = [{
-          in: "F",
-          out: "F-F++F-F",
-        }, ];
-      }
-    } else {
-      //Sliders
-      vinkel.value = 60;
-      //Knappar
-      scale = 1;
-      //Knappar
-      djup.value = 0;
-      let axiom = "F++F++F";
-      let rules = [{
-        in: "F",
-        out: "F-F++F-F",
-      }, ];
-    }
-    save();
-  };
-  //!START
-  load();
 
   //!EXEMPEL
   const Kochcurve = document.getElementById("Kochcurve");
@@ -526,8 +525,9 @@ let fraktal = (function () {
     }, ];
     vinkel.value = 60;
     scale = 5;
-    djup.value = 0;
-    update();
+    djup.value = 4;
+
+    setup();
   });
   const Sierpinskisquare = document.getElementById("Sierpinskisquare");
   Sierpinskisquare.addEventListener("click", function () {
@@ -605,14 +605,36 @@ let fraktal = (function () {
     djup.value = 0;
     update();
   });
-  const VonKochSnowflake = document.getElementById("Von Koch Snowflake");
-  VonKochSnowflake.addEventListener("click", function () {
-    axiom = "F++F++F";
+  const Sierpinskitriangle = document.getElementById("Sierpinski Triangle");
+  Sierpinskitriangle.addEventListener("click", function () {
+    axiom = "FXF--FF--FF";
     rules = [{
-      in: "F",
-      out: "F-F++F-F",
-    }, ];
+        in: "F",
+        out: "FF",
+      },
+      {
+        in: "X",
+        out: "--FXF++FXF++FXF--",
+      },
+    ];
     vinkel.value = 60;
+    scale = 5;
+    djup.value = 0;
+    update();
+  });
+  const DragonCurve = document.getElementById("Dragon Curve");
+  DragonCurve.addEventListener("click", function () {
+    axiom = "FX";
+    rules = [{
+        in: "X",
+        out: "X+YF+",
+      },
+      {
+        in: "Y",
+        out: "-FX-Y",
+      },
+    ];
+    vinkel.value = 90;
     scale = 5;
     djup.value = 0;
     update();
@@ -671,23 +693,7 @@ let fraktal = (function () {
     djup.value = 0;
     update();
   });
-  const DragonCurve = document.getElementById("Dragon Curve");
-  DragonCurve.addEventListener("click", function () {
-    axiom = "FX";
-    rules = [{
-        in: "X",
-        out: "X+YF+",
-      },
-      {
-        in: "Y",
-        out: "-FX-Y",
-      },
-    ];
-    vinkel.value = 90;
-    scale = 5;
-    djup.value = 0;
-    update();
-  });
+
   const SierpinskiArrowhead = document.getElementById("Sierpinski Arrowhead");
   SierpinskiArrowhead.addEventListener("click", function () {
     axiom = "YF";
