@@ -1,110 +1,121 @@
-body {
-  font-family: "courier", monospace;
-  background-color: black;
-  color: white;
-  text-align: center;
+:root {
+  --start-color: #27ae60;
+  --end-color: #e74c3c;
+  --wall-color: #2c3e50;
+  --visited-color: #3498db;
+  --path-color: #f1c40f;
+  --button-bg: #2c3e50;
+  --button-hover-bg: #2c6a94;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  background: #ecf0f1;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 0.6rem;
+  margin: 0px;
+  padding: 0%;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0px;
+}
+
+p {
+  font-size: 0.6rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0px;
+}
 .input {
-  width: 93%;
-  border-radius: 5px;
-  color: black;
+  border: 0px solid white;
+  width: 60%;
+  margin: 0%;
+  padding: 0px;
+  height: 30%;
+  font-size: 0.6rem;
+  border-radius: 3px;
+  background-color: var(--wall-color);
   background: white;
 }
 
 .input:hover {
-  background: black;
+  background-color: var(--wall-color);
   color: white;
 }
 
 .kontroller {
-  width: 176px;
-  height: 99.5%;
+  margin-top: 20px;
+  background-color: #ecf0f1;
+  color: var(--wall-color);
+  width: 50%;
+  height: 5%;
   margin: auto;
   position: fixed;
   top: 0%;
-  left: 0%;
+  left: 25%;
+  padding-left: 20px;
   right: 100%;
   border-radius: 10px;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto;
-}
-
-.grid-container1 {
-  display: grid;
-  grid-template-columns: auto;
-}
-
-.grid-item {
-  text-align: center;
-  margin: auto;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .slider-container {
   display: grid;
   grid-template-columns: auto;
   width: 100%;
-  margin: auto;
-  padding-bottom: 5px;
+  margin-top: 10px;
+  padding-bottom: 0px;
 }
 
 .slider {
-  -webkit-appearance: none;
-  width: 95%;
-  height: 20px;
-  background: #000000;
-  outline: none;
-  margin: auto;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
+  appearance: none;
+  width: 150px;
+  height: 5px;
+  background: #bdc3c7;
   border-radius: 5px;
-  border: 1px solid white;
-}
-
-.slider:hover {
-  background: black;
-  color: white;
+  outline: none;
 }
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: white;
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid white;
+  height: 11px;
+  width: 11px;
+  border-radius: 7px;
+  background: var(--button-bg);
   cursor: pointer;
-  border-radius: 5px;
 }
 
 .slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #ffffff;
+  box-shadow: 0px 0px 0px #000000;
+  border: 0px solid white;
+  height: 11px;
+  width: 11px;
+  border-radius: 7px;
+  background: var(--button-bg);
   cursor: pointer;
 }
 
 .knapp {
-  background: white;
-  color: black;
-  width: 80px;
-  cursor: pointer;
+  background-color: var(--button-bg);
+  color: #fff;
+  border: none;
   border-radius: 5px;
-  height: 20px;
-  border: 1px solid white;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
+  padding: 7px 10px;
+  font-size: 0.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .knapp:hover {
-  background: black;
-  border-radius: 5px;
-  color: white;
+  background-color: var(--button-hover-bg);
 }
 
 #canvas {
@@ -115,52 +126,15 @@ body {
 }
 
 .knappon {
-  width: 80px;
-  background: black;
-  color: white;
+  background-color: var(--button-hover-bg);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 0.6rem;
+  font-weight: 500;
   cursor: pointer;
-  border-radius: 5px;
-  height: 20px;
-  display: table-cell;
-  vertical-align: middle;
-  border: 1px solid white;
-}
-
-.knappex {
-  background: white;
-  color: black;
-  text-align: center;
-  cursor: pointer;
-  font-size: 12px;
-  width: 80px;
-  height: 28px;
-  display: table-cell;
-  vertical-align: middle;
-  border-radius: 5px;
-  border: 1px solid white;
-}
-
-.knappex:hover {
-  background: black;
-  border-radius: 5px;
-  color: white;
-}
-
-.knappgöm {
-  display: block;
-  background: black;
-  color: white;
-  width: 85px;
-  height: 20px;
-  cursor: pointer;
-  font-size: 15px;
-  border-radius: 5px;
-}
-
-.knappgöm:hover {
-  background: white;
-  border-radius: 5px;
-  color: black;
+  transition: background-color 0.2s ease;
 }
 
 .göminfo {
@@ -172,45 +146,58 @@ body {
 }
 
 .dropbtn {
-  font-family: "courier", monospace;
-  background-color: white;
-  color: black;
+  color: white;
+  background: var(--wall-color);
   width: 82px;
   height: 22px;
-  font-size: 16px;
+  font-size: 0.6rem;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid white;
+  border: 0px solid white;
   display: table-cell;
   vertical-align: middle;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-}
-
 .dropdown-content a {
-  color: black;
-  width: 80px;
-  height: 30px;
-  text-decoration: none;
-  display: block;
-  display: table-cell;
+  color: white;
 }
 
 .dropdown-content a:hover {
   color: white;
+  background: var(--button-hover-bg);
 }
 
-.dropdown:hover .dropdown-content {
-  width: 176px;
-  display: grid;
-  grid-template-columns: auto auto;
+.dropdown-content {
+  margin-top: 0px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  row-gap: 18px;
 }
 
 .dropdown:hover .dropbtn {
-  background-color: black;
+  background: var(--button-hover-bg);
   color: white;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-container1 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  font-size: 0.6rem;
+  text-align: center;
+  margin: 0;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }

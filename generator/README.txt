@@ -1,37 +1,32 @@
-KONTROLLER
-
-Den här fraktal generatorn använder sig av Lindenmayer systemet (https://en.wikipedia.org/wiki/L-system)
-
 START TUTORIAL:
-1. Börja med att tryck på "RESET"
-2. Tryck på "DJUP" för att se "Minkowski curve" fraktalen
-3. Ändra "VINKEL" och "ZOOM" för att anpassa din fraktal
+1. Start by pressing "Reset"
+2. Press "Depth" to see the "Minkowski curve" fractal
+3. Change the "Angle" and "Zoom" to customize your fractal
 
-REGLER:
-    • F = Betyder rita ett streck framåt
-    • + och - = Betyder sväng höger eller vänster enligt en given vinkel
-    • [ och ] = Skapa en ny förgrening som sparar position och vinkel
+RULES:
+    • F = Means draw a line forward
+    • + and - = Means turn right or left according to a given angle
+    • [ and ] = Create a new branch that saves position and angle
+
+BUTTONS AND SLIDERS:
+    • INFO: Display information box
+    • RESET: Reset to start fractal
+    • COLOR: 1=regular 2=blue 3=green 4=red 5=orange 6=rgb (multi-coloured)
+    • ANGLE: Change the angle of the fractal (press the arrow keys to change the exact degree)
+    • DEPTH: Change iterations
+    • RANDOM: Creates a random fractal
+    • ANIMATE: Animates the fractal with the angle
+    • SAVE: Save your entries
+    • EXAMPLES: Show examples of fractals. NOTE: Press DEEP after selecting an example.
+
+TUTORIAL TO CREATE YOUR OWN FRACTAL:
+1. Type in your "AXIOM"
+2. Write in your "RULES"
+3. Press "SAVE"
+4. Press "DEEP" to see your fractal
+5. Change the "ANGLE" and "ZOOM" to customize your fractal
 
 INPUT BOX:
     • AXIOM INPUT EX:F
-    • RULES INPUT EX:F=-F++F-
-    • Du måste skriva "rules" på detta sätt (rules in=rules out)
-
-KNAPPAR OCH SLIDER:
-    • INFO: Visa informationsruta
-    • FÄRG: 1=vit 2=blå 3=grön 4=röd 5=orange 6=rgb(multicolor)
-    • VINKEL: Ändra vinkeln på fraktalen (tryck på piltangenterna för att ändra exakt grad)
-    • ZOOM: Zooma in på fraktalen
-    • DJUP: Ändra iterationer
-    • RANDOM: Skapar en random fraktal
-    • ANIMERA: Animerar fraktalen med vinkeln
-    • SPARA: Spara dina inputs
-    • RESET: Återställa till start fraktalen
-    • EXEMPEL: Visa exempel på fraktaler. OBS: tryck på DJUP efter att du har valt ett exempel.
-
-TUTORIAL FÖR ATT SKAPA EGEN FRAKTAL:
-1. Skriv in din "AXIOM"
-2. Skriv in dina "RULES"
-3. Tryck på "SPARA"
-4. Tryck på "DJUP" för att se din fraktal
-5. Ändra "VINKEL" och "ZOOM" för att anpassa din fraktal
+    • REGULATION INPUT EX:F=-F++F-
+    • You must write "rules" in this way (rules in=rules out)

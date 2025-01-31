@@ -7,7 +7,7 @@ let animatespeed = 100;
 //hur snabbt färgen ändras på alternativ 6/color settings
 let colorspeed = 500;
 let colorchange = 15;
-let colorinterval = ""
+let colorinterval = "";
 //random variablar
 let arr = ["F", "F", "+", "-"];
 let hello = ["", "", "", "", ""];
@@ -21,29 +21,31 @@ let color = 0,
   g = 0,
   b = 0,
   animera = 0,
-  timer, generation = 0,
+  timer,
+  generation = 0,
   maxGeneration = 5;
 
 //första fraktalen vid start
 let axiom = "F++F++F";
-let rules = [{
-  in: "F",
-  out: "F-F++F-F",
-}, ];
+let rules = [
+  {
+    in: "F",
+    out: "F-F++F-F",
+  },
+];
 let mening = axiom;
 
 //göm från början
 document.getElementById("göminfo").style.visibility = "hidden";
 
-
 // variabar för att zomma och flyta på fraktalen
-let scale = 1
+let scale = 1;
 let down = false;
 let x1 = window.innerWidth / 2;
 let y1 = window.innerHeight / 2;
 let dragDiff = {
   x1: 0,
-  y1: 0
+  y1: 0,
 };
 
 //när användaren börjar dra med musen
@@ -102,7 +104,7 @@ function generera() {
     let found = false;
     //för varje tecken i meningen/axiomen
     let tecken = mening.charAt(i);
-    //för varje tecken i regel körs denna 
+    //för varje tecken i regel körs denna
     for (let j = 0; j < rules.length; j++) {
       //om teckenet är samma som regel tecknet körs denna
       if (tecken === rules[j].in) {
@@ -122,10 +124,10 @@ function generera() {
 //ändra färg och steg fraktal
 function draw() {
   resetMatrix(0);
-  background(0);
+  background("#ecf0f1");
   //color
   if (color === 0) {
-    stroke(255); //white
+    stroke(44, 62, 80); //white
   } else if (color == 1) {
     stroke(0, 0, 255); //blue
   } else if (color == 2) {
@@ -195,7 +197,6 @@ let fraktal = (function () {
       document.getElementById("göminfo").style.height = "0px";
       document.getElementById("göm2").style.visibility = "visible";
       document.getElementById("göm2").style.height = "325px";
-
     } else {
       document.getElementById("göminfo").style.visibility = "visible";
       document.getElementById("göminfo").style.height = "340px";
@@ -243,7 +244,7 @@ let fraktal = (function () {
       b -= colorchange;
     }
     draw();
-  };
+  }
 
   //!SLIDERS VINKEL
   vinkel = document.getElementById("vinkel");
@@ -271,27 +272,32 @@ let fraktal = (function () {
     update();
   };
 
-
   //!RANDOM
   let random = document.getElementById("randomknapp");
   random.onclick = function () {
     for (let i = 0; i < 8; i++) {
       hello[i] = arr[Math.floor(Math.random() * arr.length)];
-
     }
-    axiom = "F" + arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)];
-    rules = [{
-      in: "F",
-      out: "F" +
-        hello[0] +
-        hello[1] +
-        hello[2] +
-        hello[3] +
-        hello[4] +
-        hello[5] +
-        hello[6] +
-        hello[7],
-    }, ];
+    axiom =
+      "F" +
+      arr[Math.floor(Math.random() * arr.length)] +
+      arr[Math.floor(Math.random() * arr.length)] +
+      arr[Math.floor(Math.random() * arr.length)];
+    rules = [
+      {
+        in: "F",
+        out:
+          "F" +
+          hello[0] +
+          hello[1] +
+          hello[2] +
+          hello[3] +
+          hello[4] +
+          hello[5] +
+          hello[6] +
+          hello[7],
+      },
+    ];
     vinkel.value = getRandomInt(0, 361);
     scale = 4;
     djup.value = 3;
@@ -340,15 +346,15 @@ let fraktal = (function () {
   spara.onclick = function () {
     axiom = document.getElementById("axiom").value;
 
-    var textArea = document.getElementById('rules2');
-    var rows = textArea.value.split('\n');
+    var textArea = document.getElementById("rules2");
+    var rows = textArea.value.split("\n");
 
     //skit dålig
     if (rows.length >= 2) {
-
       const row1 = rows[0].split("=");
       const row2 = rows[1].split("=");
-      rules = [{
+      rules = [
+        {
           in: row1[0],
           out: row1[1],
         },
@@ -360,11 +366,12 @@ let fraktal = (function () {
     }
     if (rows.length === 1) {
       const row1 = rows[0].split("=");
-      rules = [{
-        in: row1[0],
-        out: row1[1],
-      }, ];
-
+      rules = [
+        {
+          in: row1[0],
+          out: row1[1],
+        },
+      ];
     }
     // Loop through all rows
 
@@ -383,17 +390,14 @@ let fraktal = (function () {
     } else {
       confirm(
         "OBS: Tryck på DJUP för att se din fraktal\n" +
-        "Axiom: " +
-        axiom +
-        "\nRules in: " +
-        rules[0].in +
-        "\nRules out: " +
-        rules[0].out
+          "Axiom: " +
+          axiom +
+          "\nRules in: " +
+          rules[0].in +
+          "\nRules out: " +
+          rules[0].out
       );
-
-
     }
-
   };
 
   //!RESET
@@ -406,10 +410,12 @@ let fraktal = (function () {
     x1 = window.innerWidth / 2;
     y1 = window.innerHeight / 2;
     axiom = "F++F++F";
-    rules = [{
-      in: "F",
-      out: "F-F++F-F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "F-F++F-F",
+      },
+    ];
     mening = axiom;
     //stönga av animera
     clearTimeout(timer);
@@ -421,7 +427,21 @@ let fraktal = (function () {
 
   //!SAVE OCH LOAD
   let save = function () {
-    let ruleid = "#" + vinkel.value + "," + scale + "," + color + "," + djup.value + "," + axiom + "," + rules[0].in + "," + rules[0].out;
+    let ruleid =
+      "#" +
+      vinkel.value +
+      "," +
+      scale +
+      "," +
+      color +
+      "," +
+      djup.value +
+      "," +
+      axiom +
+      "," +
+      rules[0].in +
+      "," +
+      rules[0].out;
     window.location = String(window.location).replace(/\#.*$/, "") + ruleid;
   };
 
@@ -440,7 +460,6 @@ let fraktal = (function () {
       rules[0].in = partoflink[5];
       rules[0].out = partoflink[6];
 
-
       if (
         vinkel.value == undefined ||
         scale === undefined ||
@@ -450,21 +469,21 @@ let fraktal = (function () {
         rules[0].out === undefined ||
         color === undefined
       ) {
-
         //Sliders
         vinkel.value = 60;
         //Knappar
         scale = 10;
         djup.value = 0;
         let axiom = "F++F++F";
-        let rules = [{
-          in: "F",
-          out: "F-F++F-F",
-        }, ];
+        let rules = [
+          {
+            in: "F",
+            out: "F-F++F-F",
+          },
+        ];
         color = 0;
       }
     } else {
-
       //Sliders
       vinkel.value = 60;
       //Knappar
@@ -472,10 +491,12 @@ let fraktal = (function () {
       //Knappar
       djup.value = 0;
       let axiom = "F++F++F";
-      let rules = [{
-        in: "F",
-        out: "F-F++F-F",
-      }, ];
+      let rules = [
+        {
+          in: "F",
+          out: "F-F++F-F",
+        },
+      ];
       color = 0;
     }
     save();
@@ -513,16 +534,16 @@ let fraktal = (function () {
     save();
   };
 
-
-
   //!EXEMPEL
   const Kochcurve = document.getElementById("Kochcurve");
   Kochcurve.addEventListener("click", function () {
     axiom = "-F";
-    rules = [{
-      in: "F",
-      out: "F+F--F+F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "F+F--F+F",
+      },
+    ];
     vinkel.value = 60;
     scale = 5;
     djup.value = 4;
@@ -532,10 +553,12 @@ let fraktal = (function () {
   const Sierpinskisquare = document.getElementById("Sierpinskisquare");
   Sierpinskisquare.addEventListener("click", function () {
     axiom = "F+XF+F+XF";
-    rules = [{
-      in: "X",
-      out: "XF-F+F-XF+F+XF-F+F-X",
-    }, ];
+    rules = [
+      {
+        in: "X",
+        out: "XF-F+F-XF+F+XF-F+F-X",
+      },
+    ];
     vinkel.value = 90;
     scale = 5;
     djup.value = 0;
@@ -545,10 +568,12 @@ let fraktal = (function () {
   const LSystemBushes1 = document.getElementById("L-System Bushes 1");
   LSystemBushes1.addEventListener("click", function () {
     axiom = "F";
-    rules = [{
-      in: "F",
-      out: "FF+[+F-F-F]-[-F+F+F]",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "FF+[+F-F-F]-[-F+F+F]",
+      },
+    ];
     vinkel.value = 22.5;
     scale = 5;
     djup.value = 0;
@@ -558,10 +583,12 @@ let fraktal = (function () {
   const LSystemBushes2 = document.getElementById("L-System Bushes 2");
   LSystemBushes2.addEventListener("click", function () {
     axiom = "F";
-    rules = [{
-      in: "F",
-      out: "F[+FF][-FF]F[-F][+F]F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "F[+FF][-FF]F[-F][+F]F",
+      },
+    ];
     vinkel.value = 35;
     scale = 5;
     djup.value = 0;
@@ -571,10 +598,12 @@ let fraktal = (function () {
   const Board = document.getElementById("Board");
   Board.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [{
-      in: "F",
-      out: "FF+F+F+F+FF",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "FF+F+F+F+FF",
+      },
+    ];
     vinkel.value = 90;
     scale = 5;
     djup.value = 0;
@@ -584,10 +613,12 @@ let fraktal = (function () {
   const Triangle = document.getElementById("Triangle");
   Triangle.addEventListener("click", function () {
     axiom = "F+F+F";
-    rules = [{
-      in: "F",
-      out: "F-F+F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "F-F+F",
+      },
+    ];
     vinkel.value = 120;
     scale = 5;
     djup.value = 0;
@@ -596,10 +627,12 @@ let fraktal = (function () {
   const Crystal = document.getElementById("Crystal");
   Crystal.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [{
-      in: "F",
-      out: "FF+F++F+F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "FF+F++F+F",
+      },
+    ];
     vinkel.value = 90;
     scale = 5;
     djup.value = 0;
@@ -608,7 +641,8 @@ let fraktal = (function () {
   const Sierpinskitriangle = document.getElementById("Sierpinski Triangle");
   Sierpinskitriangle.addEventListener("click", function () {
     axiom = "FXF--FF--FF";
-    rules = [{
+    rules = [
+      {
         in: "F",
         out: "FF",
       },
@@ -625,7 +659,8 @@ let fraktal = (function () {
   const DragonCurve = document.getElementById("Dragon Curve");
   DragonCurve.addEventListener("click", function () {
     axiom = "FX";
-    rules = [{
+    rules = [
+      {
         in: "X",
         out: "X+YF+",
       },
@@ -642,10 +677,12 @@ let fraktal = (function () {
   const Tiles = document.getElementById("Tiles");
   Tiles.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [{
-      in: "F",
-      out: "FF+F-F+F+FF",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "FF+F-F+F+FF",
+      },
+    ];
     vinkel.value = 90;
     scale = 5;
     djup.value = 0;
@@ -655,10 +692,12 @@ let fraktal = (function () {
   const Rings = document.getElementById("Rings");
   Rings.addEventListener("click", function () {
     axiom = "F+F+F+F";
-    rules = [{
-      in: "F",
-      out: "FF+F+F+F+F+F-F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "FF+F+F+F+F+F-F",
+      },
+    ];
     vinkel.value = 90;
     scale = 5;
     djup.value = 0;
@@ -667,10 +706,12 @@ let fraktal = (function () {
   const Lévycurve = document.getElementById("Lévy curve");
   Lévycurve.addEventListener("click", function () {
     axiom = "F";
-    rules = [{
-      in: "F",
-      out: "+F--F+",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "+F--F+",
+      },
+    ];
     vinkel.value = 45;
     scale = 5;
     djup.value = 0;
@@ -679,7 +720,8 @@ let fraktal = (function () {
   const HexagonalGosper = document.getElementById("Hexagonal Gosper");
   HexagonalGosper.addEventListener("click", function () {
     axiom = "XF";
-    rules = [{
+    rules = [
+      {
         in: "X",
         out: "X+YF++YF-FX--FXFX-YF+",
       },
@@ -697,7 +739,8 @@ let fraktal = (function () {
   const SierpinskiArrowhead = document.getElementById("Sierpinski Arrowhead");
   SierpinskiArrowhead.addEventListener("click", function () {
     axiom = "YF";
-    rules = [{
+    rules = [
+      {
         in: "X",
         out: "YF+XF+Y",
       },
@@ -714,10 +757,12 @@ let fraktal = (function () {
   const QuadraticSnowflake = document.getElementById("Quadratic Snowflake");
   QuadraticSnowflake.addEventListener("click", function () {
     axiom = "F";
-    rules = [{
-      in: "F",
-      out: "F-F+F+F-F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "F-F+F+F-F",
+      },
+    ];
     vinkel.value = 90;
     scale = 5;
     djup.value = 0;
@@ -726,7 +771,8 @@ let fraktal = (function () {
   const PeanoCurve = document.getElementById("Peano Curve");
   PeanoCurve.addEventListener("click", function () {
     axiom = "X";
-    rules = [{
+    rules = [
+      {
         in: "X",
         out: "XFYFX+F+YFXFY-F-XFYFX",
       },
@@ -743,10 +789,12 @@ let fraktal = (function () {
   const snowflake = document.getElementById("Snowflake");
   snowflake.addEventListener("click", function () {
     axiom = "F-F-F-F-F";
-    rules = [{
-      in: "F",
-      out: "F-F++F+F-F-F",
-    }, ];
+    rules = [
+      {
+        in: "F",
+        out: "F-F++F+F-F-F",
+      },
+    ];
     vinkel.value = 72;
     scale = 5;
     djup.value = 0;
@@ -755,14 +803,15 @@ let fraktal = (function () {
   const KrishnaAnklets = document.getElementById("Krishna Anklets");
   KrishnaAnklets.addEventListener("click", function () {
     axiom = "-X--X";
-    rules = [{
-      in: "X",
-      out: "XFX--XFX",
-    }, ];
+    rules = [
+      {
+        in: "X",
+        out: "XFX--XFX",
+      },
+    ];
     vinkel.value = 45;
     scale = 5;
     djup.value = 0;
     update();
   });
-
 })();
